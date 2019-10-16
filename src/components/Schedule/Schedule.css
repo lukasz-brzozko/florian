@@ -1,0 +1,10 @@
+.schedule {
+  width: 95%;
+  margin: 0 auto; }
+  .schedule__container {
+    display: flex;
+    height: 10vh;
+    width: 100%; }
+    .schedule__container--mass {
+      height: 5vh;
+      border-top: 2px solid black; }

@@ -1,0 +1,17 @@
+@import 'src/common/variables.scss';
+
+.schedule {
+    width: 95%;
+    margin: 0 auto;
+
+    &__container {
+        display: flex;
+        height: 10vh;
+        width: 100%;
+
+        &--mass {
+            height: 5vh;
+            border-top: $cell-border;
+        }
+    }
+}

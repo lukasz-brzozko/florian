@@ -1,0 +1,14 @@
+.schedule__content {
+  font-size: 13px; }
+
+.schedule__content-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black; }
+
+.schedule__content-cell:last-of-type {
+  border-right: 2px solid black; }

@@ -1,0 +1,21 @@
+@import 'src/common/variables.scss';
+
+.schedule {
+    &__content {
+        font-size: 13px;
+
+        &-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 100%;
+            border-left: $cell-border;
+            border-bottom: $cell-border;
+
+            &:last-of-type {
+                border-right: $cell-border
+            }
+        }
+    }
+}
