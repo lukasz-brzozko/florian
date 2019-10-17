@@ -8,14 +8,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-sizing: border-box;
             width: 100%;
-            border-left: $cell-border;
-            border-bottom: $cell-border;
-
-            &:last-of-type {
-                border-right: $cell-border
-            }
         }
     }
 }
