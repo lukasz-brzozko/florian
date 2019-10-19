@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Schedule from './components/Schedule/Schedule';
 import ContentCell from './components/ContentCell/ContentCell';
 
