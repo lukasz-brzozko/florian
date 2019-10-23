@@ -2,63 +2,38 @@ import React from 'react';
 import Schedule from './components/Schedule/Schedule';
 import ContentCell from './components/ContentCell/ContentCell';
 
-const axios = require('axios');
-const db = {
-    activeVariantId: 0,
-    masses: [
-        {
-            id: 1,
-            time: '7:00'
-        },
-        {
-            id: 2,
-            time: '9:00'
-        },
-        {
-            id: 3,
-            time: '10:30'
-        },
-        {
-            id: 4,
-            time: '12:00'
-        },
-        {
-            id: 5,
-            time: '18:00'
-        }
-    ],
-    people: [
-        {
-            id: 1,
-            name: 'Proboszcz'
-        },
-        {
-            id: 2,
-            name: 'Robert'
-        },
-        {
-            id: 3,
-            name: 'Radek'
-        }
-    ]
-}
-const { masses, people } = db;
+const axios = require('axios').default;
 
 class App extends React.Component {
     state = {
-        dataReady: false
+        dataReady: false,
+        isDataFetchingError: false,
+        data: {}
     }
 
-    getData = () => {
-        axios.get('/data')
-            .then(response => {
-                // handle success
+    getScheduleData = () => {
+        axios.get('https://florian-8cd60.firebaseio.com/data.json')
+            .then(response => response.data)
+            .then(data => {
                 this.setState({
-                    dataReady: true
+                    dataReady: true,
+                    data
                 })
-                console.log(response);
-                return response;
+                console.log(data)
+                return data;
             })
+            .catch(err => {
+                this.setState({
+                    isDataFetchingError: true,
+                })
+                console.log(err);
+                setTimeout(this.getScheduleData, 10000)
+            })
+    }
+
+    getClassifieds = () => {
+        axios.get('/classfields').then(res => console.log(res.data))
+
     }
     // createAllTimetableVariants = () => {
     //     generateTimetable(timetableWeeks.FIRSTWEEK, 'first-week')
@@ -66,7 +41,8 @@ class App extends React.Component {
     //     generateTimetable(timetableWeeks.THIRDWEEK, 'third-week')
     // }
 
-    generateMassSchedule = () => {
+    generateMassSchedule = data => {
+        const { masses } = data;
         const array = masses.map((item, index) => (
             <ContentCell
                 modifier='mass'
@@ -78,10 +54,12 @@ class App extends React.Component {
         return array;
     }
 
-    generateTimetable = (offset, modifierName = "") => {
+    generateTimetable = (data, modifierName = "") => {
+        const { masses, people, activeVariantId } = data;
         let counter = 0;
         const array = [];
-        for (let i = offset; i < masses.length + offset; i++) {
+
+        for (let i = activeVariantId; i < masses.length + activeVariantId; i++) {
             if (!people[i]) {
 
                 if (!people[counter]) { counter = 0 }
@@ -105,8 +83,13 @@ class App extends React.Component {
         }
         return array;
     }
-
+    componentDidMount() {
+        this.getScheduleData()
+        this.getClassifieds()
+    }
     render() {
+        const { generateTimetable, generateMassSchedule, state } = this;
+        const { data, dataReady, isDataFetchingError } = state;
         return (
             <>
                 <header className='topbar'>
@@ -115,9 +98,11 @@ class App extends React.Component {
                     </div>
                 </header>
                 <Schedule
-                    generateTimetable={this.generateTimetable}
-                    generateMassSchedule={this.generateMassSchedule}
-                    activeVariantId={db.activeVariantId}
+                    generateTimetable={generateTimetable}
+                    generateMassSchedule={generateMassSchedule}
+                    data={data}
+                    isDataReady={dataReady}
+                    isDataFetchingError={isDataFetchingError}
                 />
             </>
         );

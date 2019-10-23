@@ -2,14 +2,16 @@ import React from 'react';
 import './Schedule.scss';
 
 const Schedule = props => {
-    const { generateMassSchedule, generateTimetable, activeVariantId } = props;
+
+    const { isDataReady, isDataFetchingError, data } = props;
+
     return (
         <section className='schedule'>
             <div className="schedule__container schedule__container--mass">
-                {generateMassSchedule()}
+                {isDataReady && props.generateMassSchedule(data)}
             </div>
             <div className="schedule__container ">
-                {generateTimetable(activeVariantId)}
+                {isDataReady && props.generateTimetable(data)}
             </div>
         </section>
     );
