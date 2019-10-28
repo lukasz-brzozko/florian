@@ -13,7 +13,6 @@ app.use(express.json())
 app.disable("x-powered-by");
 
 app.get('/', (req, res) => {
-    res.removeHeader('X-Powered-By')
     res.sendFile('index.html', { root: __dirname + '/public' })
 });
 app.get('/ogloszenia', (req, res) => {
