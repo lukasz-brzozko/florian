@@ -1,7 +1,7 @@
 import React from 'react';
-import './Schedule.scss';
+import './ScheduleWidget.scss';
 
-const Schedule = props => {
+const ScheduleWidget = props => {
 
     const { isDataReady, isDataFetchingError, data } = props;
 
@@ -17,4 +17,4 @@ const Schedule = props => {
     );
 }
 
-export default Schedule;
+export default ScheduleWidget;

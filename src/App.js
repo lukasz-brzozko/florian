@@ -1,18 +1,21 @@
 import React from 'react';
-import Schedule from './components/Schedule/Schedule';
+import ScheduleWidget from './components/ScheduleWidget/ScheduleWidget';
 import ContentCell from './components/ContentCell/ContentCell';
+import ClassifiedsWidget from './components/ClassifiedsWidget/ClassifiedsWidget';
 
 const axios = require('axios').default;
 
 class App extends React.Component {
     state = {
         dataReady: false,
+        classifiedsReady: false,
         isDataFetchingError: false,
-        data: {}
+        data: {},
+        classifieds: {}
     }
 
     getScheduleData = () => {
-        axios.get('https://florian-8cd60.firebaseio.com/data.json')
+        axios.get('URL TO YOUR DATABASE REST')
             .then(response => response.data)
             .then(data => {
                 this.setState({
@@ -32,7 +35,12 @@ class App extends React.Component {
     }
 
     getClassifieds = () => {
-        axios.get('/classfields').then(res => console.log(res.data))
+        axios.get('/ogloszenia')
+            .then(res => res.data)
+            .then(result => this.setState({
+                classifiedsReady: true,
+                classifieds: result
+            }))
 
     }
     // createAllTimetableVariants = () => {
@@ -83,13 +91,42 @@ class App extends React.Component {
         }
         return array;
     }
-    componentDidMount() {
+
+    generateClassifiedsList = (dataObject) => {
+        const posts = [];
+        for (const key in dataObject) {
+            const title = dataObject[key].find(el => el.name === 'title').elements[0].text;
+            const content = dataObject[key].find(el => el.name === 'content:encoded').elements[0].cdata;
+            const pubDate = dataObject[key].find(el => el.name === 'pubDate').elements[0].text;
+            posts.push({
+                title,
+                content,
+                pubDate
+            })
+        }
+        console.log(posts);
+
+        return (
+            <ul>
+                {/* {
+                    liElementsArray.map(el => (
+                        <li>{el}</li>
+                    ))
+                } */}
+            </ul >
+
+        )
+
+
+    }
+
+    componentDidMount() { //do testowania
         this.getScheduleData()
         this.getClassifieds()
     }
     render() {
-        const { generateTimetable, generateMassSchedule, state } = this;
-        const { data, dataReady, isDataFetchingError } = state;
+        const { generateTimetable, generateMassSchedule, generateClassifiedsList, state } = this;
+        const { data, classifieds, dataReady, classifiedsReady, isDataFetchingError } = state;
         return (
             <>
                 <header className='topbar'>
@@ -97,13 +134,17 @@ class App extends React.Component {
                         <p className="topbar__date">Data</p>
                     </div>
                 </header>
-                <Schedule
+                <ScheduleWidget
                     generateTimetable={generateTimetable}
                     generateMassSchedule={generateMassSchedule}
                     data={data}
                     isDataReady={dataReady}
                     isDataFetchingError={isDataFetchingError}
                 />
+                <ClassifiedsWidget
+                    classifieds={classifieds}
+                    areClassifiedsReady={classifiedsReady}
+                    generateClassifiedsList={generateClassifiedsList} />
             </>
         );
     }
