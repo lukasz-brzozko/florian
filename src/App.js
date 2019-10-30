@@ -2,7 +2,8 @@ import React from 'react';
 import ScheduleWidget from './components/ScheduleWidget/ScheduleWidget';
 import ContentCell from './components/ContentCell/ContentCell';
 import ClassifiedsWidget from './components/ClassifiedsWidget/ClassifiedsWidget';
-
+import ClassifiedItem from './components/ClassifiedItem/ClassifiedItem';
+import { DB } from './common/dbConstants';
 const axios = require('axios').default;
 
 class App extends React.Component {
@@ -15,7 +16,7 @@ class App extends React.Component {
     }
 
     getScheduleData = () => {
-        axios.get('URL TO YOUR DATABASE REST')
+        axios.get(DB.URL_REST)
             .then(response => response.data)
             .then(data => {
                 this.setState({
@@ -92,33 +93,20 @@ class App extends React.Component {
         return array;
     }
 
-    generateClassifiedsList = (dataObject) => {
-        const posts = [];
-        for (const key in dataObject) {
-            const title = dataObject[key].find(el => el.name === 'title').elements[0].text;
-            const content = dataObject[key].find(el => el.name === 'content:encoded').elements[0].cdata;
-            const pubDate = dataObject[key].find(el => el.name === 'pubDate').elements[0].text;
-            posts.push({
-                title,
-                content,
-                pubDate
-            })
-        }
-        console.log(posts);
-
-        return (
-            <ul>
-                {/* {
-                    liElementsArray.map(el => (
-                        <li>{el}</li>
+    generateClassifiedsList = (posts) =>
+        (
+            <ul className='classifieds__list'>
+                {
+                    posts.map((el, index) => (
+                        <ClassifiedItem key={index}>{el}</ClassifiedItem>
                     ))
-                } */}
+                }
             </ul >
 
-        )
+        );
 
 
-    }
+
 
     componentDidMount() { //do testowania
         this.getScheduleData()

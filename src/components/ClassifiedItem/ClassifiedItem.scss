@@ -1,0 +1,22 @@
+.article {
+    &__title {
+        &-wrapper {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &__content-container {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .7s;
+
+        &--active {
+            max-height: 1000px;
+        }
+    }
+
+
+
+}
