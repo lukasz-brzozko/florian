@@ -1,18 +1,18 @@
-@import '../../common/variables.scss';
+@import "../../common/variables.scss";
 
 .schedule {
-    width: 95%;
-    margin: 0 auto;
-    border: $cell-border;
-    border-radius: 10px;
+  width: 95%;
+  margin: 0 auto;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
 
-    &__container {
-        display: flex;
-        height: 8vh;
-        width: 100%;
+  &__container {
+    display: flex;
+    height: 8vh;
+    width: 100%;
 
-        &--mass {
-            height: 5vh;
-        }
+    &--mass {
+      height: 5vh;
     }
+  }
 }

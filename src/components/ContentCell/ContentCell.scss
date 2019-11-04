@@ -1,14 +1,18 @@
-@import '../../common/variables.scss';
+@import "../../common/variables.scss";
 
 .schedule {
-    &__content {
-        font-size: 13px;
+  &__content {
+    font-size: 1.3rem;
+    font-weight: bold;
 
-        &-cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
+    &-cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      width: 20%;
+      //   margin: 0 5px;
+      overflow-x: hidden;
     }
+  }
 }
