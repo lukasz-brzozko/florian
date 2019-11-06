@@ -1,39 +1,37 @@
 import React from "react";
-import ScheduleWidget from "./components/ScheduleWidget/ScheduleWidget";
-import ContentCell from "./components/ContentCell/ContentCell";
-import ClassifiedsWidget from "./components/ClassifiedsWidget/ClassifiedsWidget";
-import ClassifiedItem from "./components/ClassifiedItem/ClassifiedItem";
-import { DB } from "./common/dbConstants";
+import ScheduleWidget from "../ScheduleWidget/ScheduleWidget";
+import ContentCell from "../ContentCell/ContentCell";
+import ClassifiedsWidget from "../ClassifiedsWidget/ClassifiedsWidget";
+import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
+import { DB } from "../../common/dbConstants";
+import { getData } from "../../common/firebase";
 const axios = require("axios").default;
 
-class App extends React.Component {
+class HomeView extends React.Component {
   state = {
     dataReady: false,
     classifiedsReady: false,
     isDataFetchingError: false,
-    data: {},
-    classifieds: {}
+    data: null,
+    classifieds: null
   };
 
-  getScheduleData = () => {
-    axios
-      .get(DB.URL_REST)
-      .then(response => response.data)
-      .then(data => {
-        this.setState({
-          dataReady: true,
-          data
-        });
-        console.log(data);
-        return data;
-      })
-      .catch(err => {
-        this.setState({
-          isDataFetchingError: true
-        });
-        console.log(err);
-        setTimeout(this.getScheduleData, 10000);
+  getScheduleData = async () => {
+    try {
+      const data = await getData();
+      this.generateTimetable(data);
+      this.setState({
+        dataReady: true,
+        data,
+        isDataFetchingError: false
       });
+    } catch (err) {
+      this.setState({
+        isDataFetchingError: true
+      });
+      console.log(err);
+      setTimeout(this.getScheduleData, 10000);
+    }
   };
 
   getClassifieds = () => {
@@ -102,6 +100,7 @@ class App extends React.Component {
     //do testowania
     this.getScheduleData();
     this.getClassifieds();
+    console.log("czesc");
   }
   render() {
     const {
@@ -141,4 +140,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default HomeView;
