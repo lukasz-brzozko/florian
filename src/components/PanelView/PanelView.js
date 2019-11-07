@@ -1,32 +1,49 @@
 import React from "react";
 import { getAuth } from "../../common/firebase";
+import { tsParenthesizedType } from "@babel/types";
 
 class PanelView extends React.Component {
-  state = { isUserLogged: false };
+  state = {
+    loading: true,
+    logged: false
+  };
 
-  addAuthListening = async () => {
-    const auth = await getAuth();
-    auth.onAuthStateChanged(user => {
+  addAuthListening = () => {
+    const auth = getAuth();
+    const ref = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log("zalogowany");
-        this.setState({
-          isUserLogged: true
-        });
+        this.setState({ logged: true });
       } else {
         this.props.history.push("/login");
       }
     });
+    return ref;
+  };
+  signUserOut = () => {
+    const auth = getAuth();
+    auth.signOut();
+    this.props.history.goBack();
   };
 
+  getUnsubscribeRef = null;
+
   componentDidMount() {
-    this.addAuthListening();
+    this.getUnsubscribeRef = this.addAuthListening();
+  }
+
+  componentWillUnmount() {
+    this.getUnsubscribeRef();
   }
 
   render() {
     return (
       <>
-        {!this.state.isUserLogged && <p>BŁADDDDDDDDDDDDDDDDDDDDDDDDDDDDDD</p>}
-        <div>Panel</div>
+        {this.state.logged && (
+          <>
+            <div>hejj</div>
+            <button onClick={this.signUserOut}>Wyloguj</button>
+          </>
+        )}
       </>
     );
   }

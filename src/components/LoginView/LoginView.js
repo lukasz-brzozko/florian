@@ -1,72 +1,70 @@
 import React from "react";
+import "./LoginView.scss";
+import * as firebase from "firebase/app";
 import { getAuth } from "../../common/firebase";
-
+import firebaseui from "firebaseui/dist/npm__pl";
 class LoginView extends React.Component {
   state = {
-    loginInputValue: "",
-    passwordInputValue: "",
-    loading: false
+    loading: true
+    // logged: false
   };
 
-  handleInputChange = (e, inputType) => {
-    if (inputType === "login") {
-      this.setState({
-        loginInputValue: e.target.value
-      });
-    } else {
-      this.setState({
-        passwordInputValue: e.target.value
-      });
+  generateFirebaseUI = () => {
+    let ui = firebaseui.auth.AuthUI.getInstance();
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
     }
+    const uiConfig = {
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl = "/panel") => {
+          // this.setState({ logged: true });
+          // this.props.history.push({
+          //   pathname: redirectUrl
+          // });
+        },
+        uiShown: () => {
+          this.setState({ loading: false });
+        }
+      },
+      credentialHelper: firebaseui.auth.CredentialHelper.NONE,
+
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
+      ]
+    };
+    ui.start("#firebaseui-auth-container", uiConfig);
   };
 
-  sendForm = async e => {
-    const { loginInputValue, passwordInputValue } = this.state;
-    e.preventDefault();
-    const auth = await getAuth();
-    auth
-      .signInWithEmailAndPassword(loginInputValue, passwordInputValue)
-      .then(res =>
-        this.props.history.push({
-          pathname: "/panel",
-          state: { isUserLogged: true }
-        })
-      )
-      .catch(error => {
-        console.log(error);
-      });
+  addAuthListening = () => {
+    const auth = getAuth();
+    const ref = auth.onAuthStateChanged(user => {
+      if (user) {
+        console.log("logged");
+        this.props.history.push("/panel");
+      } else {
+        this.generateFirebaseUI();
+      }
+    });
+    return ref;
   };
+
+  getUnsubscribeRef = null;
 
   componentDidMount() {
-    const auth = getAuth();
+    this.getUnsubscribeRef = this.addAuthListening();
+  }
+
+  componentWillUnmount() {
+    this.getUnsubscribeRef();
   }
 
   render() {
-    const { loginInputValue, passwordInputValue } = this.state;
-
     return (
-      <form action="/login" method="post">
-        <input
-          type="text"
-          name="login"
-          placeholder="Login"
-          value={loginInputValue}
-          onChange={e => {
-            this.handleInputChange(e, "login");
-          }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Hasło"
-          value={passwordInputValue}
-          ref="input"
-          onChange={e => {
-            this.handleInputChange(e, "password");
-          }}
-        />
-        <button onClick={this.sendForm}>Wyślij</button>
-      </form>
+      <>
+        <div id="firebaseui-auth-container"></div>
+        {/* <div id="loader">Loading...</div> */}
+      </>
     );
   }
 }
