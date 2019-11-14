@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginView.scss";
 import * as firebase from "firebase/app";
-import { getAuth } from "../../common/firebase";
+import { getAuth, getDatabase } from "../../common/firebase";
 import firebaseui from "firebaseui/dist/npm__pl";
 class LoginView extends React.Component {
   state = {
@@ -40,7 +40,6 @@ class LoginView extends React.Component {
     const auth = getAuth();
     const ref = auth.onAuthStateChanged(user => {
       if (user) {
-        console.log("logged");
         this.props.history.push("/panel");
       } else {
         this.generateFirebaseUI();

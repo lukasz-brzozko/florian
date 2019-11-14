@@ -2,17 +2,24 @@
 
 .schedule {
   &__content {
-    font-size: 1.3rem;
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.6rem;
     font-weight: bold;
+    text-align: center;
+    background-color: #eee;
+    line-height: ($schedule-widget-height / $grid-masses-count);
+    overflow: hidden;
 
-    &-cell {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
-      width: 20%;
-      //   margin: 0 5px;
-      overflow-x: hidden;
+    &--mass {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: center;
+
+      // for desktop
+      // grid-row: 1;
+      // grid-column: auto;
     }
   }
 }

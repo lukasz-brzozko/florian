@@ -1,6 +1,5 @@
 import React from "react";
 import { getAuth } from "../../common/firebase";
-import { tsParenthesizedType } from "@babel/types";
 
 class PanelView extends React.Component {
   state = {

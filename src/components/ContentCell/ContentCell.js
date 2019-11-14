@@ -1,15 +1,17 @@
-import React from 'react';
-import './ContentCell.scss';
+import React from "react";
+import "./ContentCell.scss";
 
 const ContentCell = props => {
-    const { modifier, children } = props;
-    return (
-        <div className={`schedule__content-cell${modifier ? ' schedule__content-cell--' + modifier : ''
-            }`}>
-            <p className="schedule__content">
-                {children}
-            </p>
-        </div>);
-}
+  const { modifier, children } = props;
+  return (
+    <span
+      className={`schedule__content${
+        modifier ? " schedule__content--" + modifier : ""
+      }`}
+    >
+      {children}
+    </span>
+  );
+};
 
 export default ContentCell;

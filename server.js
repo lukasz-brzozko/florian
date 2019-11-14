@@ -3,11 +3,14 @@ const app = express();
 const path = require("path");
 const fetch = require("node-fetch");
 const convert = require("xml-js");
-
+const bodyParser = require("body-parser");
 const port = process.env.PORT || 3030;
+const firebaseAdmin = require("./src/common/firebase-admin");
+let currentTimeZone = "GMT+0200";
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // const indexRouter = require(path.join(__dirname, '/routes/index'));
 app.disable("x-powered-by");
@@ -15,7 +18,39 @@ app.disable("x-powered-by");
 app.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/public" });
 });
+
 app.get("/ogloszenia", (req, res) => {
+  console.log(currentTimeZone);
+  const dayToMiliseconds = 86400000;
+
+  const todayDate = new Date();
+  const todayWithTimezone = todayDate.toTimeString();
+  const todayGMTPosition = todayWithTimezone.indexOf("GMT");
+  const todayGMTEndPosition = todayWithTimezone.indexOf(" ", todayGMTPosition);
+  const todayTimeZone = todayWithTimezone.substring(
+    todayGMTPosition,
+    todayGMTEndPosition
+  );
+
+  const yesterdayWithTimezone = new Date(
+    todayDate - dayToMiliseconds
+  ).toTimeString();
+  const yesterdayTimeZone = yesterdayWithTimezone.substring(
+    todayGMTPosition,
+    todayGMTEndPosition
+  );
+
+  if (todayTimeZone !== currentTimeZone) {
+    if (todayTimeZone === yesterdayTimeZone) {
+      if (todayTimeZone === "GMT+0200") {
+        firebaseAdmin.changeEveningMassTime("18:00");
+      } else {
+        firebaseAdmin.changeEveningMassTime("17:00");
+      }
+      currentTimeZone = todayTimeZone;
+    }
+  }
+
   const postsCount = 4;
 
   const sendResponse = () => {
@@ -69,9 +104,9 @@ app.get("/ogloszenia", (req, res) => {
   };
   sendResponse();
 });
-// app.get('*', (req, res) => {
-//     res.redirect('/')
-// });
+app.get("*", (req, res) => {
+  res.redirect("/");
+});
 
 // app.use('/', indexRouter);
 

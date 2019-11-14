@@ -4,7 +4,7 @@ import ContentCell from "../ContentCell/ContentCell";
 import ClassifiedsWidget from "../ClassifiedsWidget/ClassifiedsWidget";
 import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
 import { DB } from "../../common/dbConstants";
-import { getData } from "../../common/firebase";
+import { getData, getDatabase } from "../../common/firebase";
 const axios = require("axios").default;
 
 class HomeView extends React.Component {
@@ -16,14 +16,33 @@ class HomeView extends React.Component {
     classifieds: null
   };
 
-  getScheduleData = async () => {
+  // getScheduleData = async () => {
+  //   try {
+  //     const data = await getData();
+  //     this.generateTimetable(data);
+  //     this.setState({
+  //       dataReady: true,
+  //       data,
+  //       isDataFetchingError: false
+  //     });
+  //   } catch (err) {
+  //     this.setState({
+  //       isDataFetchingError: true
+  //     });
+  //     console.log(err);
+  //     setTimeout(this.getScheduleData, 10000);
+  //   }
+  // };
+  getScheduleData = async (name = "") => {
     try {
-      const data = await getData();
-      this.generateTimetable(data);
-      this.setState({
-        dataReady: true,
-        data,
-        isDataFetchingError: false
+      const db = await getDatabase();
+      db.ref(`data/${name}`).on("value", snapshot => {
+        this.setState({
+          dataReady: true,
+          data: snapshot.val(),
+          isDataFetchingError: false
+        });
+        this.generateTimetable(snapshot.val());
       });
     } catch (err) {
       this.setState({
