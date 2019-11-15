@@ -36,6 +36,7 @@ class HomeView extends React.Component {
   getScheduleData = async (name = "") => {
     try {
       const db = await getDatabase();
+
       db.ref(`data/${name}`).on("value", snapshot => {
         this.setState({
           dataReady: true,
@@ -55,7 +56,7 @@ class HomeView extends React.Component {
 
   getClassifieds = () => {
     axios
-      .get("/ogloszenia")
+      .get("/api/ogloszenia")
       .then(res => res.data)
       .then(result =>
         this.setState({
@@ -72,6 +73,9 @@ class HomeView extends React.Component {
 
   generateMassSchedule = data => {
     const { masses } = data;
+    masses.sort((a, b) => {
+      return parseFloat(a.time) - parseFloat(b.time);
+    });
     const array = masses.map((item, index) => (
       <ContentCell modifier="mass" key={index}>
         {item.time}
