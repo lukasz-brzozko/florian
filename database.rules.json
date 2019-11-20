@@ -1,8 +1,8 @@
 {
   "rules": {
+    ".read": true,
+    ".write": "auth.token.admin === true",
     "data": {
-      ".read": true,
-      ".write": "auth.token.admin === true",
       "masses": { ".indexOn": ".value" }
     }
   }

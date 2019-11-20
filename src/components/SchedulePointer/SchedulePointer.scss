@@ -1,0 +1,14 @@
+.schedule {
+  &__pointer {
+    // display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    box-shadow: 0 0 0 2px;
+    border-radius: 5px;
+    background-color: rgba($color: #333, $alpha: 0.1);
+    transition: top 0.5s;
+  }
+}

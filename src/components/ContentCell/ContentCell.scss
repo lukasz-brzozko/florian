@@ -2,14 +2,17 @@
 
 .schedule {
   &__content {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 100%;
     height: 100%;
     font-size: 1.6rem;
     font-weight: bold;
     text-align: center;
     background-color: #eee;
-    line-height: ($schedule-widget-height / $grid-masses-count);
+    // line-height: ($schedule-widget-height / $grid-masses-count);
     overflow: hidden;
 
     &--mass {
@@ -20,6 +23,15 @@
       // for desktop
       // grid-row: 1;
       // grid-column: auto;
+    }
+    &--variant-0 {
+      background-color: #b2d2f0;
+    }
+    &--variant-1 {
+      background-color: #ffe598;
+    }
+    &--variant-2 {
+      background-color: #c5e0b3;
     }
   }
 }

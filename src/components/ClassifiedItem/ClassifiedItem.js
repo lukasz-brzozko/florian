@@ -1,8 +1,8 @@
 import React from "react";
 import "./ClassifiedItem.scss";
 const ClassifiedItem = props => {
-  const { title, content, pubDate } = props.children;
-  const localDate = new Date(pubDate).toLocaleString();
+  const { title, content, date } = props.children;
+  const localDate = new Date(date).toLocaleString();
 
   return (
     <li className="classifieds__item">
@@ -13,6 +13,8 @@ const ClassifiedItem = props => {
             e.currentTarget.nextElementSibling.classList.toggle(
               "article__content-container--active"
             );
+            e.currentTarget.lastChild.textContent =
+              e.currentTarget.lastChild.textContent === "+" ? "-" : "+";
           }}
         >
           <h1 className="article__title">{title}</h1>
