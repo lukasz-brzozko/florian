@@ -4,30 +4,23 @@ import Spinner from "../../common/Spinner/Spinner";
 import ContentCell from "../ContentCell/ContentCell";
 import SchedulePointer from "../SchedulePointer/SchedulePointer";
 import { getDatabase } from "../../common/firebase";
+import { ReactComponent as Arrow } from "../../assets/arrow.svg";
+import { ReactComponent as HomeBtn } from "../../assets/home.svg";
 import moment from "moment";
 
-// const ScheduleWidget = props => {
-//   const { isDataReady, isDataFetchingError, data } = props;
-
-//   return (
-//     <section className={`schedule${isDataReady ? " schedule--active" : ""}`}>
-//       {isDataReady && props.generateMassSchedule(data)}
-//       {isDataReady && props.generateTimetable(data)}
-//       {!isDataReady && <Spinner dimensions={"30%"} />}
-//       <div className="schedule__pointer"></div>
-//     </section>
-//   );
-// };
-
-// export default ScheduleWidget;
-
 class ScheduleWidget extends React.Component {
+  constructor() {
+    super();
+    this.weekdayOffset = 7;
+    this.weeksOfCurrentYear = moment().isoWeeksInYear();
+    this.date = null;
+  }
   state = {
     data: null,
     isDataReady: false,
-    timetableRendered: false,
     isDataFetchingError: false,
-    scheduleLoaderVisible: true
+    scheduleLoaderVisible: true,
+    weekOfYear: null
   };
 
   checkScheduleStatus = async () => {
@@ -36,7 +29,7 @@ class ScheduleWidget extends React.Component {
       .then(res => res.json())
       .then(json => (status = json.status))
       .catch(err => console.log(err));
-    console.log(status);
+    // console.log(status);
     if (status === "ok") {
       this.getScheduleData();
     }
@@ -53,7 +46,6 @@ class ScheduleWidget extends React.Component {
           isDataFetchingError: false,
           scheduleLoaderVisible: false
         });
-        // this.generateTimetable(snapshot.val());
       });
     } catch (err) {
       this.setState({
@@ -75,7 +67,7 @@ class ScheduleWidget extends React.Component {
     ));
     return array;
   };
-  generateTimetable = (data, modifierName = "") => {
+  generateTimetable = (data, weekOfYear, modifierName = "") => {
     const {
       masses,
       people,
@@ -83,13 +75,12 @@ class ScheduleWidget extends React.Component {
       activeCaseID,
       scheduleWeekCases
     } = data;
-    const week = moment().isoWeek();
-    const moduloOfCurrentWeek = week % 3;
+    // const week = moment().isoWeek();
+    const moduloOfCurrentWeek = weekOfYear % 3;
 
     const activeVariantId = scheduleWeekCases[activeCaseID].cases.find(
       el => el.moduloWeekValue === moduloOfCurrentWeek
     ).variantId;
-    console.log(activeVariantId);
     let counter = 0;
     const array = [];
 
@@ -112,29 +103,104 @@ class ScheduleWidget extends React.Component {
         </ContentCell>
       );
     }
-    // this.setState({ timetableRendered: true });
     return array;
   };
 
+  setDateFromTheWeekOfYear = () => {
+    if (!this.state.weekOfYear) {
+      const week = moment().isoWeek();
+      this.setState({ weekOfYear: week });
+    }
+    const date = moment().isoWeekday(this.weekdayOffset)._d;
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    this.date = `${day < 10 ? "0" + day : day}.${
+      month < 10 ? "0" + month : month
+    }.${year} r.`;
+  };
+  changeWeekOfYear = (direction = 1) => {
+    if (direction === 1) {
+      if (this.state.weekOfYear === this.weeksOfCurrentYear) return;
+      this.weekdayOffset += 7;
+      this.setState(prevState => ({ weekOfYear: prevState.weekOfYear + 1 }));
+    } else if (direction === -1) {
+      if (this.state.weekOfYear === 1) return;
+
+      this.weekdayOffset -= 7;
+      this.setState(prevState => ({ weekOfYear: prevState.weekOfYear - 1 }));
+    } else {
+      if (this.weekdayOffset === 7) return;
+      this.weekdayOffset = 7;
+      const week = moment().isoWeek();
+      this.setState({ weekOfYear: week });
+    }
+    this.setDateFromTheWeekOfYear();
+  };
+
   componentDidMount() {
+    this.setDateFromTheWeekOfYear();
     this.checkScheduleStatus();
   }
   render() {
-    const { isDataReady, data } = this.state;
-    const { generateMassSchedule, generateTimetable } = this;
+    const { isDataReady, data, weekOfYear } = this.state;
+    const {
+      generateMassSchedule,
+      generateTimetable,
+      changeWeekOfYear,
+      weeksOfCurrentYear
+    } = this;
     let massesArray;
     if (isDataReady) {
-      massesArray = generateTimetable(data);
+      massesArray = generateTimetable(data, weekOfYear);
     }
 
     return (
-      <section className={`schedule${isDataReady ? " schedule--active" : ""}`}>
-        {isDataReady && generateMassSchedule(data)}
-        {massesArray}
-        {massesArray && <SchedulePointer />}
-        {!isDataReady && <Spinner dimensions={"30%"} />}
-        {/* {isDataReady &&  <SchedulePointer />} */}
-      </section>
+      <>
+        <section className="schedule">
+          <p className="schedule__date">{isDataReady && this.date}</p>
+          <div
+            className={`schedule__container${
+              isDataReady ? " schedule__container--active" : ""
+            }`}
+          >
+            {isDataReady && generateMassSchedule(data)}
+            {massesArray}
+            {massesArray && this.weekdayOffset === 7 && <SchedulePointer />}
+            {!isDataReady && <Spinner dimensions={"30%"} />}
+          </div>
+          {isDataReady && (
+            <div className="schedule__button-container">
+              <Arrow
+                className={`schedule__button schedule__button--previous${
+                  weekOfYear === 1 ? " schedule__button--hidden" : ""
+                }`}
+                onClick={e => {
+                  changeWeekOfYear(-1);
+                }}
+              />
+
+              <HomeBtn
+                className="schedule__button schedule__button--actual"
+                onClick={e => {
+                  changeWeekOfYear(0);
+                }}
+              />
+              <Arrow
+                className={`schedule__button schedule__button--next${
+                  weekOfYear === weeksOfCurrentYear
+                    ? " schedule__button--hidden"
+                    : ""
+                }`}
+                onClick={e => {
+                  changeWeekOfYear(1);
+                }}
+              />
+            </div>
+          )}
+        </section>
+      </>
     );
   }
 }

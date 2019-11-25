@@ -1,6 +1,6 @@
 .article {
+  font-size: 1.8rem;
   margin: 10px 0;
-  font-size: 1.7rem;
 
   &__title {
     line-height: 1.2;
@@ -29,6 +29,9 @@
     ul {
       margin-left: 40px;
       list-style-type: disc;
+    }
+    li {
+      margin-top: 5px;
     }
     b,
     strong {

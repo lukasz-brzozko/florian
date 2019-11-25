@@ -12,12 +12,12 @@ const HomeView = props => {
 
   return (
     <>
-      <Link to="/login">Login</Link>
+      {/* <Link to="/login">Login</Link>
       <header className="topbar">
         <div className="topbar__container">
           <p className="topbar__date">Data</p>
         </div>
-      </header>
+      </header> */}
       <ScheduleWidget />
       <ClassifiedsWidget />
     </>

@@ -11,20 +11,20 @@ class SchedulePointer extends React.Component {
   checkPointerPosition = () => {
     const date = new Date();
     const day = date.getDay();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    const currentTime = `${hours < 10 ? "0" + hours : hours}:${
-      minutes < 10 ? "0" + minutes : minutes
-    }:${seconds < 10 ? "0" + seconds : seconds}`;
-    const { pointerVisible, pointerTopPosition } = this.state;
+
     if (day === 0) {
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      const currentTime = `${hours < 10 ? "0" + hours : hours}:${
+        minutes < 10 ? "0" + minutes : minutes
+      }:${seconds < 10 ? "0" + seconds : seconds}`;
+      const { pointerVisible, pointerTopPosition } = this.state;
+
       const mass = [
         ...document.querySelectorAll(".schedule__content--mass")
       ].find(el => el.textContent > currentTime);
-      // console.log(mass.textContent);
-      // console.log(currentTime);
-      // console.log(mass.textContent > currentTime);
+
       if (mass && !pointerVisible) {
         this.setState({
           pointerVisible: true,
@@ -42,7 +42,18 @@ class SchedulePointer extends React.Component {
         });
         return;
       }
-      this.interval = setTimeout(this.checkPointerPosition, 1000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const dayOfMonth = date.getDate();
+      const massTimeMiliseconds = new Date(
+        `${year}-${month}-${dayOfMonth} ${mass.textContent}:00`
+      ).getTime();
+
+      const currentTimeMiliseconds = date.getTime();
+      const differTime = massTimeMiliseconds - currentTimeMiliseconds;
+      console.log(new Date(currentTimeMiliseconds + differTime));
+
+      this.interval = setTimeout(this.checkPointerPosition, differTime);
     }
   };
 
