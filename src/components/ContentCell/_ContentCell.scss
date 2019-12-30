@@ -11,7 +11,7 @@
     font-size: 1.7rem;
     font-weight: bold;
     text-align: center;
-    background-color: #eee;
+    background-color: #fff;
     overflow: hidden;
 
     &--mass {
@@ -24,13 +24,16 @@
       // grid-column: auto;
     }
     &--variant-0 {
-      background-color: #b2d2f0;
+      // background-color: #b2d2f0;
+      background-color: #9cdaf4;
     }
     &--variant-1 {
-      background-color: #ffe598;
+      // background-color: #ffe598;
+      background-color: #ffea77;
     }
     &--variant-2 {
-      background-color: #c5e0b3;
+      // background-color: #c5e0b3;
+      background-color: #c7ea7c;
     }
   }
 }

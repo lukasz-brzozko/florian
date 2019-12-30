@@ -2,7 +2,9 @@
 
 .schedule {
   width: 90%;
-  margin: 20px auto 4vh;
+  max-width: 700px;
+  min-height: 300px;
+  margin: 0 auto 4vh;
 
   &__date {
     font-size: 1.9rem;
@@ -26,6 +28,7 @@
 
     box-shadow: $box-shadow;
     border-radius: $border-radius;
+    background-color: #fff;
     overflow: hidden;
 
     &--active {
@@ -45,6 +48,7 @@
     font-family: "Roboto Condensed", "Roboto", sans-serif;
     background-color: transparent;
     font-size: 1.6rem;
+    user-select: none;
     cursor: pointer;
 
     &--previous {

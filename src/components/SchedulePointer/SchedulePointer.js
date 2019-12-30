@@ -1,5 +1,5 @@
 import React from "react";
-import "./SchedulePointer.scss";
+import "./_SchedulePointer.scss";
 
 class SchedulePointer extends React.Component {
   state = {
@@ -11,7 +11,7 @@ class SchedulePointer extends React.Component {
   checkPointerPosition = () => {
     const date = new Date();
     const day = date.getDay();
-
+    // zmienić nr dnia
     if (day === 0) {
       const hours = date.getHours();
       const minutes = date.getMinutes();

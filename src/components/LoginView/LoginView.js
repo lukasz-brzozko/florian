@@ -1,5 +1,5 @@
 import React from "react";
-import "./LoginView.scss";
+import "./_LoginView.scss";
 import * as firebase from "firebase/app";
 import { getAuth, getDatabase } from "../../common/firebase";
 import firebaseui from "firebaseui/dist/npm__pl";
@@ -61,7 +61,7 @@ class LoginView extends React.Component {
   render() {
     return (
       <>
-        <div id="firebaseui-auth-container"></div>
+        <div id="firebaseui-auth-container" className="firebaseui"></div>
         {/* <div id="loader">Loading...</div> */}
       </>
     );

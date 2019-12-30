@@ -1,5 +1,5 @@
 import React from "react";
-import "./ClassifiedsWidget.scss";
+import "./_ClassifiedsWidget.scss";
 import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
 import { getDatabase } from "../../common/firebase";
 import Spinner from "../../common/Spinner/Spinner";
@@ -61,6 +61,7 @@ class ClassifiedsWidget extends React.Component {
     const { classifieds, classifiedsReady } = this.state;
     return (
       <section className="classifieds">
+        <p className="classifieds__widget-title">Ogłoszenia duszpasterskie</p>
         {classifiedsReady && this.generateClassifiedsList(classifieds)}
         {!classifiedsReady && <Spinner dimensions={"30%"} />}
       </section>

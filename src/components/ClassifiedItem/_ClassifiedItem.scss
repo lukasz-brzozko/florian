@@ -1,6 +1,7 @@
+@import "../../common/variables";
 .article {
   font-size: 1.8rem;
-  margin: 10px 0;
+  // margin: 10px 0;
 
   &__title {
     line-height: 1.2;
@@ -11,6 +12,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px 15px;
+      font-weight: bold;
+      transition: background-color 0.5s;
+      &--active {
+        background-color: $classified-color;
+      }
     }
   }
   &__published {
@@ -27,7 +34,7 @@
       list-style-type: decimal;
     }
     ul {
-      margin-left: 40px;
+      margin-left: 20px;
       list-style-type: disc;
     }
     li {
@@ -37,15 +44,20 @@
     strong {
       font-weight: bold;
     }
-    i {
+    i,
+    em,
+    q {
       font-style: italic;
     }
 
     &-container {
       height: 0;
       // max-height: 0;
+      width: 92%;
+      margin: 0 auto;
       overflow: hidden;
       // transition: max-height 0.7s -0.2s;
+
       &--active {
         // max-height: 2500px;
         // transition-delay: 0s;
@@ -57,5 +69,16 @@
   &__show {
     display: block;
     height: 100%;
+    font-size: 3rem;
+    color: $classified-color;
+    &::before {
+      content: "+";
+    }
+    &--active {
+      color: #fff;
+      &::before {
+        content: "-";
+      }
+    }
   }
 }

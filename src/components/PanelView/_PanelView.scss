@@ -1,0 +1,27 @@
+.panel-view {
+  margin: 20px auto 0;
+  &__button {
+    display: block;
+    font-family: "Roboto Condensed", "Roboto", sans-serif;
+    width: 100px;
+    height: 60px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 1.7rem;
+    font-weight: bold;
+    background-color: #ffcc00;
+    text-transform: uppercase;
+
+    &:disabled {
+      background-color: gray;
+      color: white;
+      opacity: 0.5;
+    }
+
+    &-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+  }
+}

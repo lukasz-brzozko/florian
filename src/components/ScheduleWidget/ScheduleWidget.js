@@ -1,5 +1,5 @@
 import React from "react";
-import "./ScheduleWidget.scss";
+import "./_ScheduleWidget.scss";
 import Spinner from "../../common/Spinner/Spinner";
 import ContentCell from "../ContentCell/ContentCell";
 import SchedulePointer from "../SchedulePointer/SchedulePointer";
@@ -139,9 +139,16 @@ class ScheduleWidget extends React.Component {
     this.setDateFromTheWeekOfYear();
   };
 
+  removeDatabaseListener = async () => {
+    const db = await getDatabase();
+    db.ref("data").off("value");
+  };
   componentDidMount() {
     this.setDateFromTheWeekOfYear();
     this.checkScheduleStatus();
+  }
+  componentWillUnmount() {
+    this.removeDatabaseListener();
   }
   render() {
     const { isDataReady, data, weekOfYear } = this.state;

@@ -1,0 +1,9 @@
+@import "../../../node_modules/firebaseui/dist/firebaseui.css";
+
+.firebaseui {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+}

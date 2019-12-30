@@ -1,26 +1,35 @@
-import React from "react";
-import "./ClassifiedItem.scss";
+import React, { useState } from "react";
+import "./_ClassifiedItem.scss";
 const ClassifiedItem = props => {
   const { title, content, date } = props.children;
   const localDate = new Date(date).toLocaleString();
+  const [clicked, setClick] = useState(false);
 
   return (
-    <li className="classifieds__item">
+    <li
+      className="classifieds__item"
+      onClick={e => {
+        setClick(!clicked);
+      }}
+    >
       <article className="article">
         <div
-          className="article__title-wrapper"
-          onClick={e => {
-            e.currentTarget.nextElementSibling.classList.toggle(
-              "article__content-container--active"
-            );
-            e.currentTarget.lastChild.textContent =
-              e.currentTarget.lastChild.textContent === "+" ? "-" : "+";
-          }}
+          className={`article__title-wrapper${
+            clicked ? " article__title-wrapper--active" : ""
+          }`}
         >
           <h1 className="article__title">{title}</h1>
-          <span className="article__show">+</span>
+          <span
+            className={`article__show${
+              clicked ? " article__show--active" : ""
+            }`}
+          ></span>
         </div>
-        <div className="article__content-container">
+        <div
+          className={`article__content-container${
+            clicked ? " article__content-container--active" : ""
+          }`}
+        >
           <p className="article__published">Dodano: {localDate}</p>
           <div
             className="article__content"

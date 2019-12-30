@@ -1,5 +1,5 @@
 import React from "react";
-import "./ContentCell.scss";
+import "./_ContentCell.scss";
 
 const ContentCell = props => {
   const { modifier, children } = props;
