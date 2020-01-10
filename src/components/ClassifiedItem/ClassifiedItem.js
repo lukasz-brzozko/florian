@@ -6,17 +6,15 @@ const ClassifiedItem = props => {
   const [clicked, setClick] = useState(false);
 
   return (
-    <li
-      className="classifieds__item"
-      onClick={e => {
-        setClick(!clicked);
-      }}
-    >
+    <li className="classifieds__item">
       <article className="article">
         <div
           className={`article__title-wrapper${
             clicked ? " article__title-wrapper--active" : ""
           }`}
+          onClick={e => {
+            setClick(!clicked);
+          }}
         >
           <h1 className="article__title">{title}</h1>
           <span
