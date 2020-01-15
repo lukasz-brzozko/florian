@@ -10,6 +10,7 @@ const getAdminDatabase = () => {
   const db = app.database();
   return db;
 };
+
 const getAdminAuth = () => {
   const auth = app.auth();
   return auth;
@@ -20,6 +21,7 @@ const getAdminData = async (name = "") => {
   const data = await db.ref(`data/${name}`).once("value");
   return data.val();
 };
+
 const getEveningMassIndex = async (name = "masses") => {
   const db = await getAdminDatabase();
   let allMasses;
@@ -101,12 +103,12 @@ const addUser = async () => {
   auth
     .createUser({
       uid: "uid",
-      email: "mail",
+      email: "email",
       emailVerified: false,
-      phoneNumber: "phoneNumber",
-      password: "password",
-      displayName: "displayName",
-      photoURL: "http://www.example.com/12345678/photo.png",
+      phoneNumber: "phone number",
+      password: "passowrd",
+      displayName: "username",
+      // photoURL: "http://www.example.com/12345678/photo.png",
       disabled: false
     })
     .then(function(userRecord) {
@@ -120,7 +122,7 @@ const addUser = async () => {
 const addRoleForUser = async (uid, role = "admin") => {
   const auth = await getAdminAuth();
   auth.setCustomUserClaims(uid, { admin: true }).then(() => {
-    console.log("poszło");
+    console.log("Dodano rolę!");
     // The new custom claims will propagate to the user's ID token the
     // next time a new one is issued.
   });
@@ -133,6 +135,75 @@ const showUsersRoles = async uid => {
   });
 };
 
+const subscribeUserToTopic = async (token, topic) => {
+  app
+    .messaging()
+    .subscribeToTopic(token, topic)
+    .then(function(response) {
+      // See the MessagingTopicManagementResponse reference documentation
+      // for the contents of response.
+      console.log("Successfully subscribed to topic:", response);
+    })
+    .catch(function(error) {
+      console.log("Error subscribing to topic:", error);
+    });
+};
+const unsubscribeUserFromTopic = async (token, topic) => {
+  app
+    .messaging()
+    .unsubscribeFromTopic(token, topic)
+    .then(function(response) {
+      // See the MessagingTopicManagementResponse reference documentation
+      // for the contents of response.
+      console.log("Successfully unsubscribed from topic:", response);
+    })
+    .catch(function(error) {
+      console.log("Error unsubscribing from topic:", error);
+    });
+};
+
+const sendMessageToTopic = async (topic, title = "Florian", body) => {
+  const message = {
+    notification: {
+      title,
+      body
+    },
+    webpush: {
+      fcm_options: {
+        // link: "https://florian-8cd60.firebaseapp.com/"
+        link: "https://florian-8cd60.web.app"
+      },
+      headers: {
+        TTL: "604800000",
+        Urgency: "high"
+      },
+      notification: {
+        title,
+        body,
+        icon: "favicon.png",
+        requireInteraction: "true"
+      }
+    },
+    android: {
+      priority: "high"
+    },
+    topic
+  };
+
+  app.messaging().send(message);
+};
+
+const sendMessageToUser = async (token, title = "Florian", body) => {
+  const message = {
+    notification: {
+      title,
+      body
+    },
+    token
+  };
+  app.messaging().send(message);
+};
+
 const firebaseAdmin = {
   getAdminDatabase,
   getAdminData,
@@ -142,6 +213,10 @@ const firebaseAdmin = {
   setActiveVariantSchedule,
   changeEveningMassTime,
   addRoleForUser,
-  showUsersRoles
+  showUsersRoles,
+  subscribeUserToTopic,
+  unsubscribeUserFromTopic,
+  sendMessageToTopic,
+  sendMessageToUser
 };
 module.exports = firebaseAdmin;

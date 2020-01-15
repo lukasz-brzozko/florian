@@ -10,7 +10,9 @@ const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
 const serverMethods = require("./server-methods");
+const firebaseAdmin = require("./firebase-admin");
 // const port = process.env.PORT || 5000;
+const subscribeTopic = "posts";
 let currentTimeZone = "GMT+0200";
 
 app.use(
@@ -45,6 +47,27 @@ app.get("/api/ogloszenia", async (req, res) => {
   const response = await serverMethods.sendClassifieds();
   res.json(response);
 });
+
+app.post("/getinfo", async (req, res) => {
+  const token = req.body.token;
+  const succsess = await serverMethods.getInfoAboutUserToken(
+    token,
+    subscribeTopic
+  );
+  res.send(succsess);
+});
+
+app.post("/send", async (req, res) => {
+  const auth = req.get("authorization");
+  if (auth === "tajnehaselko") {
+    const body = req.body;
+    firebaseAdmin.sendMessageToTopic(subscribeTopic, "Florian", body.title);
+    res.json(body);
+  } else {
+    return res.status(403).json({ error: "No credentials sent!" });
+  }
+});
+
 app.get("*", (req, res) => {
   res.redirect(`/`);
 });

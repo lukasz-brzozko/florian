@@ -49,6 +49,19 @@
     q {
       font-style: italic;
     }
+    sub,
+    sup {
+      position: relative;
+      font-size: 75%;
+      vertical-align: baseline;
+      line-height: 0;
+    }
+    sup {
+      top: -0.5em;
+    }
+    sub {
+      top: 0.25em;
+    }
 
     &-container {
       height: 0;
