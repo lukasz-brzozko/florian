@@ -12,13 +12,13 @@
     "firebaseui-pl": "^1.0.0",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "node-schedule": "^1.3.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-loader-spinner": "^3.1.5",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "xml-js": "^1.6.11"
   },
   "scripts": {
@@ -26,7 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "scss": "node-sass src/style/ -o src/style/"
+    "scss": "node-sass src/index.scss -o public/style/"
   },
   "proxy": "http://localhost:3030",
   "eslintConfig": {

@@ -189,19 +189,11 @@ const sendMessageToTopic = async (topic, title = "Florian", body) => {
     },
     topic
   };
-
-  app.messaging().send(message);
-};
-
-const sendMessageToUser = async (token, title = "Florian", body) => {
-  const message = {
-    notification: {
-      title,
-      body
-    },
-    token
-  };
-  app.messaging().send(message);
+  try {
+    app.messaging().send(message);
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const firebaseAdmin = {
@@ -216,7 +208,6 @@ const firebaseAdmin = {
   showUsersRoles,
   subscribeUserToTopic,
   unsubscribeUserFromTopic,
-  sendMessageToTopic,
-  sendMessageToUser
+  sendMessageToTopic
 };
 module.exports = firebaseAdmin;

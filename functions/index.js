@@ -59,9 +59,12 @@ app.post("/getinfo", async (req, res) => {
 
 app.post("/send", async (req, res) => {
   const auth = req.get("authorization");
-  if (auth === "tajnehaselko") {
+  if (auth === "YOUR AUTH") {
     const body = req.body;
-    firebaseAdmin.sendMessageToTopic(subscribeTopic, "Florian", body.title);
+    const { topic, title } = body;
+    if (topic && title) {
+      firebaseAdmin.sendMessageToTopic(topic, "Florian", title);
+    }
     res.json(body);
   } else {
     return res.status(403).json({ error: "No credentials sent!" });
