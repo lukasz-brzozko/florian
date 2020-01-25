@@ -62,8 +62,10 @@ class ClassifiedsWidget extends React.Component {
     return (
       <section className="classifieds">
         <p className="classifieds__widget-title">Ogłoszenia duszpasterskie</p>
-        {classifiedsReady && this.generateClassifiedsList(classifieds)}
-        {!classifiedsReady && <Spinner dimensions={"30%"} />}
+        <div className="classifieds__wrapper">
+          {classifiedsReady && this.generateClassifiedsList(classifieds)}
+          {!classifiedsReady && <Spinner dimensions={80} />}
+        </div>
       </section>
     );
   }

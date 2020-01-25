@@ -28,9 +28,17 @@ const ClassifiedItem = props => {
             clicked ? " article__content-container--active" : ""
           }`}
         >
-          <p className="article__published">Dodano: {localDate}</p>
+          <p
+            className={`article__published${
+              clicked ? " article__published--show" : ""
+            }`}
+          >
+            Dodano: {localDate}
+          </p>
           <div
-            className="article__content"
+            className={`article__content${
+              clicked ? " article__content--show" : ""
+            }`}
             dangerouslySetInnerHTML={{ __html: content }}
           ></div>
         </div>

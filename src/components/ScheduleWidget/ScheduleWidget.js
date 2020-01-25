@@ -166,16 +166,16 @@ class ScheduleWidget extends React.Component {
     return (
       <>
         <section className="schedule">
-          <p className="schedule__date">{isDataReady && this.date}</p>
           <div
             className={`schedule__container${
               isDataReady ? " schedule__container--active" : ""
             }`}
           >
+            <span className="schedule__date">{isDataReady && this.date}</span>
             {isDataReady && generateMassSchedule(data)}
             {massesArray}
             {massesArray && this.weekdayOffset === 7 && <SchedulePointer />}
-            {!isDataReady && <Spinner dimensions={"30%"} />}
+            {!isDataReady && <Spinner dimensions={80} />}
           </div>
           {isDataReady && (
             <div className="schedule__button-container">

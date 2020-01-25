@@ -11,7 +11,7 @@ class SchedulePointer extends React.Component {
   checkPointerPosition = () => {
     const date = new Date();
     const day = date.getDay();
-    // zmienić nr dnia
+
     if (day === 0) {
       const hours = date.getHours();
       const minutes = date.getMinutes();
@@ -51,7 +51,6 @@ class SchedulePointer extends React.Component {
 
       const currentTimeMiliseconds = date.getTime();
       const differTime = massTimeMiliseconds - currentTimeMiliseconds;
-      console.log(new Date(currentTimeMiliseconds + differTime));
 
       this.interval = setTimeout(this.checkPointerPosition, differTime);
     }

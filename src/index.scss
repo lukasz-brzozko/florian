@@ -1,11 +1,10 @@
 @import "./_reset";
 @import "./common/variables";
-@import url("https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed:400,400i,700&display=swap&subset=latin-ext");
-html {
-  font-family: "Roboto Condensed", "Roboto", sans-serif;
-  font-size: 10px;
-}
 
+html {
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+}
 body {
   background-color: $body-bgc;
 }

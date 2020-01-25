@@ -6,6 +6,9 @@
   &__title {
     line-height: 1.2;
     max-width: 90%;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin: 0;
 
     &-wrapper {
       cursor: pointer;
@@ -24,10 +27,33 @@
     margin: 2vh 0;
     font-style: italic;
     font-size: 1.5rem;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity 0.2s ease-in;
+    &--show {
+      opacity: 1;
+      transition-delay: 0.6s;
+      animation: fade-in 1s 0.6s both;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(10px);
+    }
   }
 
   &__content {
     line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.25s ease-in;
+    &--show {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
 
     ol {
       margin-left: 20px;
@@ -64,18 +90,20 @@
     }
 
     &-container {
-      height: 0;
-      // max-height: 0;
+      // height: 0;
+      max-height: 0;
       width: 92%;
       margin: 0 auto;
       overflow: hidden;
-      // transition: max-height 0.7s -0.2s;
+      // opacity: 0;
+      // transition: max-height 0.8s, opacity 0.25s ease-in, margin-bottom 0.7s;
+      transition: max-height 0.8s, margin-bottom 0.7s;
 
       &--active {
-        // max-height: 2500px;
-        // transition-delay: 0s;
-        height: auto;
+        max-height: 5000px;
+        // height: auto;
         margin-bottom: 5vh;
+        opacity: 1;
       }
     }
   }

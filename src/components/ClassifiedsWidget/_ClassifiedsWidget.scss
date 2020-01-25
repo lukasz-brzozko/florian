@@ -1,11 +1,15 @@
 @import "../../common/variables";
 .classifieds {
-  position: relative;
+  // position: relative;
   // width: 92%;
   // max-width: 1000px;
-  min-height: 40vh;
+  // min-height: 40vh;
   margin: 0 auto;
   // background-color: #eee;
+  &__list {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
   &__widget-title {
     text-align: center;
     margin-bottom: 20px;
@@ -18,5 +22,9 @@
   }
   &__item {
     -webkit-tap-highlight-color: transparent;
+  }
+  &__wrapper {
+    position: relative;
+    min-height: 200px;
   }
 }
