@@ -162,7 +162,12 @@ const unsubscribeUserFromTopic = async (token, topic) => {
     });
 };
 
-const sendMessageToTopic = async (topic, title = "Florian", body) => {
+const sendMessageToTopic = async (target, title = "Florian", body) => {
+  let key = "topic";
+  if (target.length > 20) {
+    key = "token";
+  }
+
   const message = {
     notification: {
       title,
@@ -187,7 +192,7 @@ const sendMessageToTopic = async (topic, title = "Florian", body) => {
     android: {
       priority: "high"
     },
-    topic
+    [key]: target
   };
   try {
     app.messaging().send(message);
