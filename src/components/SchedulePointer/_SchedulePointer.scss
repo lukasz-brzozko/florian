@@ -1,15 +1,46 @@
 @import "../../common/variables.scss";
 .schedule {
   &__pointer {
-    // display: none;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: $grid-row-min-height;
     box-shadow: 0 0 0 2px;
+    overflow: hidden;
     border-radius: 5px;
     background-color: rgba($color: #333, $alpha: 0.17);
     transition: top 0.5s;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      animation: shine 10s ease-in-out;
+    }
+  }
+}
+@keyframes shine {
+  0% {
+    width: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    filter: blur(0);
+  }
+  5% {
+    width: 0;
+    background-color: rgba(255, 255, 255, 0.4);
+    filter: blur(0);
+  }
+  15% {
+    width: 120%;
+    background-color: rgba(255, 255, 255, 0);
+    filter: blur(10px);
+  }
+  100% {
+    width: 120%;
+    background-color: rgba(255, 255, 255, 0);
+    filter: blur(10px);
   }
 }
