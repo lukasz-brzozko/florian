@@ -1,0 +1,30 @@
+@import "../variables";
+
+.label {
+  background-color: $label-bgc;
+  padding: 2px 4px;
+  border-radius: 5px;
+  margin: 0 10px 0 5px;
+  @media (min-width: 500px) {
+    padding: 4px 5px;
+    margin: 0 25% 0 25px;
+  }
+  &__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: $label-text-color;
+    text-align: center;
+    font-weight: normal;
+    &::before {
+      content: attr(data-mobile);
+
+      @media (min-width: 500px) {
+        content: attr(data-desktop);
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
