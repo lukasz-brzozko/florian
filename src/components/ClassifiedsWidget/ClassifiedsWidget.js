@@ -4,22 +4,10 @@ import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
 import { getDatabase } from "../../common/firebase";
 import Spinner from "../../common/Spinner/Spinner";
 
-// const ClassifiedsWidget = props => {
-//   const { areClassifiedsReady, classifieds, generateClassifiedsList } = props;
-//   return (
-//     <section className="classifieds">
-//       {areClassifiedsReady && generateClassifiedsList(classifieds)}
-//       {!areClassifiedsReady && <Spinner dimensions={"30%"} />}
-//     </section>
-//   );
-// };
-
-// export default ClassifiedsWidget;
-
 class ClassifiedsWidget extends React.Component {
   state = {
     classifiedsReady: false,
-    classifieds: null
+    classifieds: null,
   };
 
   getClassifieds = async (postsCount = 4) => {
@@ -30,7 +18,7 @@ class ClassifiedsWidget extends React.Component {
       .limitToLast(postsCount)
       .once(
         "value",
-        snap => {
+        (snap) => {
           const data = snap.val();
 
           for (const key in data) {
@@ -39,14 +27,14 @@ class ClassifiedsWidget extends React.Component {
           posts.reverse();
           this.setState({
             classifiedsReady: true,
-            classifieds: posts
+            classifieds: posts,
           });
         },
-        err => setTimeout(this.getClassifieds, 10000)
+        (err) => setTimeout(this.getClassifieds, 5000)
       );
   };
 
-  generateClassifiedsList = posts => (
+  generateClassifiedsList = (posts) => (
     <ul className="classifieds__list">
       {posts.map((el, index) => (
         <ClassifiedItem key={index}>{el}</ClassifiedItem>
