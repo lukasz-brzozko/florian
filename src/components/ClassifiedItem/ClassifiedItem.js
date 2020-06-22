@@ -1,9 +1,67 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
+import DiffMatchPatch from "diff-match-patch";
 import "./_ClassifiedItem.scss";
-const ClassifiedItem = props => {
-  const { title, content, date } = props.children;
-  const localDate = new Date(date).toLocaleString();
+import "../../common/Label/Label";
+import Label from "../../common/Label/Label";
+
+const ClassifiedItem = (props) => {
+  const {
+    title,
+    content,
+    date,
+    updateDate,
+    updatedContent,
+    updatedTitle,
+  } = props.children;
+
   const [clicked, setClick] = useState(false);
+  const [isNewArtLblVis, setNewArtLblVis] = useState(false);
+  const [localEditDate, setLocalEditDate] = useState(null);
+
+  const pubDate = new Date(date);
+  const localDate = pubDate.toLocaleString();
+  const articleContent = useRef(content);
+
+  const getDifferTimeFromNow = (eventTime) => {
+    const now = new Date();
+    const milisecondsDiffer = now.getTime() - eventTime.getTime();
+    const daysDiffer = Math.floor(milisecondsDiffer / 1000 / 60 / 60 / 24);
+    return daysDiffer;
+  };
+
+  useEffect(() => {
+    if (updateDate) {
+      const editDate = new Date(updateDate);
+      setLocalEditDate(editDate.toLocaleString());
+    }
+  }, [updateDate]);
+
+  useEffect(() => {
+    const daysDiffer = getDifferTimeFromNow(pubDate);
+
+    if (daysDiffer < 2) {
+      setNewArtLblVis(true);
+    }
+  }, [pubDate]);
+
+  useMemo(() => {
+    if (updatedContent) {
+      const dmp = new DiffMatchPatch();
+      const diff = dmp.diff_main(content, updatedContent);
+      let newContent = "";
+      diff.forEach((el) => {
+        if (el[0] === -1) {
+          newContent += `<del>${el[1]}</del>`;
+        } else if (el[0] === 1) {
+          newContent += `<ins">${el[1]}</ins>`;
+        } else {
+          newContent += el[1];
+        }
+      });
+
+      articleContent.current = newContent;
+    }
+  }, [content, updatedContent]);
 
   return (
     <li className="classifieds__item">
@@ -12,16 +70,34 @@ const ClassifiedItem = props => {
           className={`article__title-wrapper${
             clicked ? " article__title-wrapper--active" : ""
           }`}
-          onClick={e => {
+          onClick={(e) => {
             setClick(!clicked);
           }}
         >
-          <h1 className="article__title">{title}</h1>
-          <span
-            className={`article__show${
-              clicked ? " article__show--active" : ""
-            }`}
-          ></span>
+          <h1 className="article__title">{updatedTitle || title}</h1>
+          <div className="article__icons-container">
+            {isNewArtLblVis && (
+              <Label
+                type="new"
+                title="Nowe ogłoszenie"
+                mobileText="N"
+                desktopText="Nowe"
+              />
+            )}
+            {updateDate && (
+              <Label
+                type="update"
+                title="Ogłoszenie edytowane"
+                mobileText="E"
+                desktopText="Edytowane"
+              />
+            )}
+            <span
+              className={`article__show${
+                clicked ? " article__show--active" : ""
+              }`}
+            ></span>
+          </div>
         </div>
         <div
           className={`article__content-container${
@@ -34,12 +110,17 @@ const ClassifiedItem = props => {
             }`}
           >
             Dodano: {localDate}
+            {localEditDate && (
+              <span className="article__updated">
+                Edytowano: {localEditDate}
+              </span>
+            )}
           </p>
           <div
             className={`article__content${
               clicked ? " article__content--show" : ""
             }`}
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: articleContent.current }}
           ></div>
         </div>
       </article>
