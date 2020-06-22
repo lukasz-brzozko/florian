@@ -7,7 +7,7 @@
   margin: 0 10px 0 5px;
   @media (min-width: 500px) {
     padding: 4px 5px;
-    margin: 0 25% 0 25px;
+    margin: 0 7% 0 0;
   }
   &__text {
     display: flex;
@@ -26,5 +26,8 @@
         letter-spacing: 1px;
       }
     }
+  }
+  &--update {
+    background-color: $label-secondary-bgc;
   }
 }
