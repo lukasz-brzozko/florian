@@ -13,17 +13,17 @@ class PanelView extends React.Component {
   state = {
     loading: true,
     logged: false,
-    isAnonymous: false
+    isAnonymous: false,
   };
 
   addAuthListening = () => {
     const auth = getAuth();
-    const ref = auth.onAuthStateChanged(user => {
+    const ref = auth.onAuthStateChanged((user) => {
       if (user) {
         const isAnonymous = user.isAnonymous;
         this.setState({
           logged: true,
-          isAnonymous
+          isAnonymous,
         });
       } else {
         this.props.history.push("/login");
@@ -37,10 +37,10 @@ class PanelView extends React.Component {
     const db = await getDatabase();
     await db.ref("data/activeCaseID").once(
       "value",
-      snap => {
+      (snap) => {
         ID = snap.val();
       },
-      err => {
+      (err) => {
         console.log(err);
       }
     );
@@ -56,7 +56,7 @@ class PanelView extends React.Component {
       currentCaseID++;
     }
     if (!this.state.isAnonymous) {
-      db.ref(`data`).update({ activeCaseID: currentCaseID }, err => {
+      db.ref(`data`).update({ activeCaseID: currentCaseID }, (err) => {
         if (err) {
           console.log(err);
         }
@@ -84,7 +84,7 @@ class PanelView extends React.Component {
         {this.state.logged && (
           <>
             <section className="panel-view">
-              <ScheduleWidget />
+              <ScheduleWidget listening={true} />
               <div className="panel-view__button-container">
                 <button
                   className="panel-view__button"
