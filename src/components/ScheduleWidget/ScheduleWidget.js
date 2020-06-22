@@ -20,42 +20,80 @@ class ScheduleWidget extends React.Component {
     isDataReady: false,
     isDataFetchingError: false,
     scheduleLoaderVisible: true,
-    weekOfYear: null
+    weekOfYear: null,
   };
 
   checkScheduleStatus = async () => {
+    const timeZone = this.getTimeZone();
     let status;
-    await fetch("/grafik")
-      .then(res => res.json())
-      .then(json => (status = json.status))
-      .catch(err => console.log(err));
-    // console.log(status);
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(timeZone),
+    };
+
+    await fetch("/grafik", options)
+      .then((res) => res.json())
+      .then((json) => (status = json.status))
+      .catch((err) => console.log(err));
+
     if (status === "ok") {
       this.getScheduleData();
     }
   };
 
   getScheduleData = async (name = "") => {
+    const dbCommand = this.props.listening ? "on" : "once";
+
     try {
       const db = await getDatabase();
 
-      db.ref(`data/${name}`).on("value", snapshot => {
+      db.ref(`data/${name}`)[dbCommand]("value", (snapshot) => {
         this.setState({
           isDataReady: true,
           data: snapshot.val(),
           isDataFetchingError: false,
-          scheduleLoaderVisible: false
+          scheduleLoaderVisible: false,
         });
       });
     } catch (err) {
       this.setState({
-        isDataFetchingError: true
+        isDataFetchingError: true,
       });
       console.log(err);
       setTimeout(this.getScheduleData, 10000);
     }
   };
-  generateMassSchedule = data => {
+
+  getTimeZone = () => {
+    const dayToMiliseconds = 86400000;
+
+    const todayDate = new Date();
+    const todayWithTimezone = todayDate.toTimeString();
+    const todayGMTPosition = todayWithTimezone.indexOf("GMT");
+    const todayGMTEndPosition = todayWithTimezone.indexOf(
+      " ",
+      todayGMTPosition
+    );
+    const todayTimeZone = todayWithTimezone.substring(
+      todayGMTPosition,
+      todayGMTEndPosition
+    );
+
+    const yesterdayWithTimezone = new Date(
+      todayDate - dayToMiliseconds
+    ).toTimeString();
+    const yesterdayTimeZone = yesterdayWithTimezone.substring(
+      todayGMTPosition,
+      todayGMTEndPosition
+    );
+
+    return { todayTimeZone, yesterdayTimeZone };
+  };
+
+  generateMassSchedule = (data) => {
     const { masses } = data;
     masses.sort((a, b) => {
       return parseFloat(a.time) - parseFloat(b.time);
@@ -73,13 +111,13 @@ class ScheduleWidget extends React.Component {
       people,
       // activeVariantId,
       activeCaseID,
-      scheduleWeekCases
+      scheduleWeekCases,
     } = data;
     // const week = moment().isoWeek();
     const moduloOfCurrentWeek = weekOfYear % 3;
 
     const activeVariantId = scheduleWeekCases[activeCaseID].cases.find(
-      el => el.moduloWeekValue === moduloOfCurrentWeek
+      (el) => el.moduloWeekValue === moduloOfCurrentWeek
     ).variantId;
     let counter = 0;
     const array = [];
@@ -124,12 +162,12 @@ class ScheduleWidget extends React.Component {
     if (direction === 1) {
       if (this.state.weekOfYear === this.weeksOfCurrentYear) return;
       this.weekdayOffset += 7;
-      this.setState(prevState => ({ weekOfYear: prevState.weekOfYear + 1 }));
+      this.setState((prevState) => ({ weekOfYear: prevState.weekOfYear + 1 }));
     } else if (direction === -1) {
       if (this.state.weekOfYear === 1) return;
 
       this.weekdayOffset -= 7;
-      this.setState(prevState => ({ weekOfYear: prevState.weekOfYear - 1 }));
+      this.setState((prevState) => ({ weekOfYear: prevState.weekOfYear - 1 }));
     } else {
       if (this.weekdayOffset === 7) return;
       this.weekdayOffset = 7;
@@ -156,7 +194,7 @@ class ScheduleWidget extends React.Component {
       generateMassSchedule,
       generateTimetable,
       changeWeekOfYear,
-      weeksOfCurrentYear
+      weeksOfCurrentYear,
     } = this;
     let massesArray;
     if (isDataReady) {
@@ -183,14 +221,14 @@ class ScheduleWidget extends React.Component {
                 className={`schedule__button schedule__button--previous${
                   weekOfYear === 1 ? " schedule__button--hidden" : ""
                 }`}
-                onClick={e => {
+                onClick={(e) => {
                   changeWeekOfYear(-1);
                 }}
               />
 
               <HomeBtn
                 className="schedule__button schedule__button--actual"
-                onClick={e => {
+                onClick={(e) => {
                   changeWeekOfYear(0);
                 }}
               />
@@ -200,7 +238,7 @@ class ScheduleWidget extends React.Component {
                     ? " schedule__button--hidden"
                     : ""
                 }`}
-                onClick={e => {
+                onClick={(e) => {
                   changeWeekOfYear(1);
                 }}
               />

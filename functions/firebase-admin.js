@@ -3,7 +3,7 @@ const serviceAccount = require("./firebase-admin-sdk.json");
 
 const app = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://florian-8cd60.firebaseio.com"
+  databaseURL: process.env.DB_CREDENTIAL,
 });
 
 const getAdminDatabase = () => {
@@ -26,19 +26,19 @@ const getEveningMassIndex = async (name = "masses") => {
   const db = await getAdminDatabase();
   let allMasses;
   let eveningMassIndex;
-  await db.ref(`data/${name}`).once("value", snap => {
+  await db.ref(`data/${name}`).once("value", (snap) => {
     allMasses = snap.val();
     const eveningMassTime = Math.max
       .apply(
         Math,
-        allMasses.map(mass => {
+        allMasses.map((mass) => {
           return mass.time.replace(":", ".");
         })
       )
       .toFixed(2);
 
     eveningMassIndex = allMasses.findIndex(
-      mass => mass.time.replace(":", ".") === eveningMassTime
+      (mass) => mass.time.replace(":", ".") === eveningMassTime
     );
   });
   return eveningMassIndex;
@@ -51,7 +51,7 @@ const getEveningMassTime = async () => {
   let data;
   await db
     .ref(`data/masses/${index}`)
-    .once("value", snap => (data = snap.val()));
+    .once("value", (snap) => (data = snap.val()));
   return data.time;
 };
 
@@ -59,7 +59,7 @@ const getActiveVariantSchedule = async () => {
   const db = await getAdminDatabase();
   await db.ref("data/activeCaseID").once(
     "value",
-    async snap => {
+    async (snap) => {
       let activeCaseID = snap.val();
       if (activeCaseID === 2) {
         activeCaseID = 0;
@@ -68,16 +68,16 @@ const getActiveVariantSchedule = async () => {
       }
       await setActiveVariantSchedule(activeCaseID);
     },
-    err => {
+    (err) => {
       setTimeout(getActiveVariantSchedule, 5000);
     }
   );
 };
 
-const setActiveVariantSchedule = async activeCaseID => {
+const setActiveVariantSchedule = async (activeCaseID) => {
   let scheduleChanged = false;
   const db = await getAdminDatabase();
-  await db.ref(`data`).update({ activeCaseID }, err => {
+  await db.ref(`data`).update({ activeCaseID }, (err) => {
     if (!err) {
       scheduleChanged = true;
     } else {
@@ -85,17 +85,19 @@ const setActiveVariantSchedule = async activeCaseID => {
     }
   });
 
-  err => {
-    setTimeout(setActiveVariantSchedule, 5000);
-  };
   return scheduleChanged;
 };
 
-const changeEveningMassTime = async eveningMassTime => {
-  const db = await getAdminDatabase();
-  let index = await getEveningMassIndex();
+const changeEveningMassTime = async (eveningMassTime) => {
+  const index = await getEveningMassIndex();
+  updateValue(`data/masses/${index}`, "time", eveningMassTime);
+};
 
-  db.ref(`data/masses/${index}`).update({ time: eveningMassTime });
+const updateValue = async (path = "", key, value) => {
+  const db = firebaseAdmin.getAdminDatabase();
+  db.ref(path).update({
+    [key]: value,
+  });
 };
 
 const addUser = async () => {
@@ -108,14 +110,13 @@ const addUser = async () => {
       phoneNumber: "phone number",
       password: "passowrd",
       displayName: "username",
-      // photoURL: "http://www.example.com/12345678/photo.png",
-      disabled: false
+      disabled: false,
     })
-    .then(function(userRecord) {
+    .then(function (userRecord) {
       // See the UserRecord reference doc for the contents of userRecord.
       console.log("Successfully created new user:", userRecord.uid);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Error creating new user:", error);
     });
 };
@@ -127,24 +128,25 @@ const addRoleForUser = async (uid, role = "admin") => {
     // next time a new one is issued.
   });
 };
-const showUsersRoles = async uid => {
+const showUsersRoles = async (uid) => {
   const auth = await getAdminAuth();
-  auth.getUser(uid).then(userRecord => {
+  auth.getUser(uid).then((userRecord) => {
     // The claims can be accessed on the user record.
     console.log(userRecord.customClaims);
   });
 };
 
 const subscribeUserToTopic = async (token, topic) => {
+  console.log(token);
   app
     .messaging()
     .subscribeToTopic(token, topic)
-    .then(function(response) {
+    .then(function (response) {
       // See the MessagingTopicManagementResponse reference documentation
       // for the contents of response.
       console.log("Successfully subscribed to topic:", response);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Error subscribing to topic:", error);
     });
 };
@@ -152,12 +154,12 @@ const unsubscribeUserFromTopic = async (token, topic) => {
   app
     .messaging()
     .unsubscribeFromTopic(token, topic)
-    .then(function(response) {
+    .then(function (response) {
       // See the MessagingTopicManagementResponse reference documentation
       // for the contents of response.
       console.log("Successfully unsubscribed from topic:", response);
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Error unsubscribing from topic:", error);
     });
 };
@@ -171,28 +173,31 @@ const sendMessageToTopic = async (target, title = "Florian", body) => {
   const message = {
     notification: {
       title,
-      body
+      body,
+    },
+    data: {
+      title,
+      body,
     },
     webpush: {
       fcm_options: {
-        // link: "https://florian-8cd60.firebaseapp.com/"
-        link: "https://florian-8cd60.web.app"
+        link: process.env.FCM_LINK,
       },
       headers: {
         TTL: "604800000",
-        Urgency: "high"
+        Urgency: "high",
       },
       notification: {
         title,
         body,
         icon: "favicon.png",
-        requireInteraction: "true"
-      }
+        requireInteraction: "true",
+      },
     },
     android: {
-      priority: "high"
+      priority: "high",
     },
-    [key]: target
+    [key]: target,
   };
   try {
     app.messaging().send(message);
@@ -213,6 +218,8 @@ const firebaseAdmin = {
   showUsersRoles,
   subscribeUserToTopic,
   unsubscribeUserFromTopic,
-  sendMessageToTopic
+  sendMessageToTopic,
+  updateValue,
+  addUser,
 };
 module.exports = firebaseAdmin;
