@@ -1,4 +1,4 @@
-@import "./_reset";
+@import "./common/reset";
 @import "./common/variables";
 
 html {
@@ -7,4 +7,8 @@ html {
 }
 body {
   background-color: $body-bgc;
+}
+a {
+  color: #007bff;
+  text-decoration: none;
 }

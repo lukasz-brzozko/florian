@@ -1,15 +1,15 @@
 import React from "react";
-import HomeView from "./components/HomeView/HomeView";
-import LoginView from "./components/LoginView/LoginView";
-import PanelView from "./components/PanelView/PanelView";
+import HomeView from "./HomeView/HomeView";
+import LoginView from "./LoginView/LoginView";
+import PanelView from "./PanelView/PanelView";
 
-import { requestNotifyPermission } from "./common/app-methods";
+import { requestNotifyPermission } from "../common/app-methods";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 const App = () => {
