@@ -2,9 +2,17 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import "firebase/messaging";
+import { getInfoAboutCurrentToken } from "./app-methods";
 
 const config = {
-'YOUR FIRABSE CONFIG'
+  apiKey: "AIzaSyAXY1bMHBit2piaS7XrQyfeQbONnPdR1go",
+  authDomain: "florian-8cd60.firebaseapp.com",
+  databaseURL: "https://florian-8cd60.firebaseio.com",
+  projectId: "florian-8cd60",
+  storageBucket: "florian-8cd60.appspot.com",
+  messagingSenderId: "1068675330484",
+  appId: "1:1068675330484:web:09491bab381cc099dcc2e1",
+  measurementId: "G-CDT4QQ1B3J",
 };
 
 firebase.initializeApp(config);
@@ -27,30 +35,36 @@ export const getData = async (name = "") => {
 export const getMessagingInstance = async () => {
   const messaging = await firebase.messaging();
   messaging.usePublicVapidKey(
-    "YOUR PUBLIC VAPID KEY"
+    "BMUc5IQuAQkwMzhHBikKF9W7gpEWjaNYKLLeVXZpFN9lZ85YozpI55dTM53Mfm49c0inuEM5EaveHMYz7BB7wwc"
   );
   return messaging;
 };
 
-export const addOnMessageListener = async messaging => {
-  const unsubscribeID = messaging.onMessage(payload => {
-    console.log("Message received. ", payload);
-    // ...
+export const addOnMessageListener = async (messaging) => {
+  const unsubscribeID = messaging.onMessage((payload) => {
+    if (payload.notification) {
+      alert(
+        `Dodano nowe ogłoszenie: \n${payload.notification.body}. \nOdśwież stronę w celu odczytania ogłoszenia.`
+      );
+    } else {
+      console.log("Message received. ", payload);
+    }
   });
   return unsubscribeID;
 };
 
-export const getMessagingToken = async messaging => {
+export const getMessagingToken = async (messaging) => {
   const token = await messaging.getToken();
+  // console.log(token);
   return token;
 };
 
-export const addTokenRefreshListener = async messaging => {
+export const addTokenRefreshListener = async (messaging) => {
   // Callback fired if Instance ID token is updated.
   const unsubscribeID = messaging.onTokenRefresh(async () => {
     console.log("generating new token");
-    await getMessagingToken(messaging);
-    // SUBSCRIBE TO THE TOPIC (SEND REQUEST TO THE SERVER)
+    const token = await getMessagingToken(messaging);
+    getInfoAboutCurrentToken(token);
     return unsubscribeID;
   });
 };
