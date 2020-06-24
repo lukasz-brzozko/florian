@@ -2,7 +2,6 @@ import React from "react";
 import "./_PanelView.scss";
 import { getAuth, getDatabase } from "../../common/firebase";
 import ScheduleWidget from "../ScheduleWidget/ScheduleWidget";
-import SchedulePointer from "../SchedulePointer/SchedulePointer";
 
 class PanelView extends React.Component {
   constructor() {
@@ -26,7 +25,7 @@ class PanelView extends React.Component {
           isAnonymous,
         });
       } else {
-        this.props.history.push("/login");
+        this.props.history.replace("/login");
       }
     });
     return ref;
@@ -87,7 +86,7 @@ class PanelView extends React.Component {
               <ScheduleWidget listening={true} />
               <div className="panel-view__button-container">
                 <button
-                  className="panel-view__button"
+                  className="panel-view__button panel-view__button--danger"
                   onClick={this.signUserOut}
                 >
                   Wyloguj

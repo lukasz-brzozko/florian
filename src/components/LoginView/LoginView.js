@@ -5,8 +5,7 @@ import { getAuth, getDatabase } from "../../common/firebase";
 import firebaseui from "firebaseui/dist/npm__pl";
 class LoginView extends React.Component {
   state = {
-    loading: true
-    // logged: false
+    loading: true,
   };
 
   generateFirebaseUI = () => {
@@ -16,31 +15,26 @@ class LoginView extends React.Component {
     }
     const uiConfig = {
       callbacks: {
-        signInSuccessWithAuthResult: (authResult, redirectUrl = "/panel") => {
-          // this.setState({ logged: true });
-          // this.props.history.push({
-          //   pathname: redirectUrl
-          // });
-        },
+        signInSuccessWithAuthResult: (authResult, redirectUrl = "/panel") => {},
         uiShown: () => {
           this.setState({ loading: false });
-        }
+        },
       },
       credentialHelper: firebaseui.auth.CredentialHelper.NONE,
 
       signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-      ]
+        firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+      ],
     };
     ui.start("#firebaseui-auth-container", uiConfig);
   };
 
   addAuthListening = () => {
     const auth = getAuth();
-    const ref = auth.onAuthStateChanged(user => {
+    const ref = auth.onAuthStateChanged((user) => {
       if (user) {
-        this.props.history.push("/panel");
+        this.props.history.replace("/panel");
       } else {
         this.generateFirebaseUI();
       }
@@ -59,12 +53,7 @@ class LoginView extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        <div id="firebaseui-auth-container" className="firebaseui"></div>
-        {/* <div id="loader">Loading...</div> */}
-      </>
-    );
+    return <div id="firebaseui-auth-container" className="firebaseui"></div>;
   }
 }
 
