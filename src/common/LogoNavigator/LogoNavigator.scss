@@ -1,0 +1,17 @@
+@import "../variables";
+@import "../widget";
+
+.logo {
+  &__container {
+    width: auto;
+    margin: 0 auto;
+    text-align: center;
+  }
+  &__title {
+    font-size: 2rem;
+  }
+  &__img {
+    max-width: 130px;
+    margin-bottom: 20px;
+  }
+}
