@@ -10,6 +10,9 @@
   &__title {
     font-size: 2rem;
   }
+  &__link {
+    -webkit-tap-highlight-color: transparent;
+  }
   &__img {
     max-width: 130px;
     margin-bottom: 20px;

@@ -48,15 +48,41 @@
     width: 12%;
     padding: 10px;
     height: 50px;
+    transform: scale(1);
     font-family: "Roboto Condensed", "Roboto", sans-serif;
     background-color: transparent;
     font-size: 1.6rem;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    transition: transform 0.1s;
+
+    path {
+      transition: fill 0.15s;
+    }
+
+    &:active {
+      transform: scale(0.7);
+    }
+
+    &:hover path {
+      fill: lighten($color: #515151, $amount: 7%);
+    }
 
     &--previous {
       transform: rotateY(-180deg);
+
+      &:active {
+        transform: rotateY(-180deg) scale(0.7);
+      }
     }
+
+    &--actual {
+      &:active {
+        transform: scale(0.8);
+      }
+    }
+
     &--hidden {
       visibility: hidden;
     }

@@ -106,14 +106,7 @@ class ScheduleWidget extends React.Component {
     return array;
   };
   generateTimetable = (data, weekOfYear, modifierName = "") => {
-    const {
-      masses,
-      people,
-      // activeVariantId,
-      activeCaseID,
-      scheduleWeekCases,
-    } = data;
-    // const week = moment().isoWeek();
+    const { masses, people, activeCaseID, scheduleWeekCases } = data;
     const moduloOfCurrentWeek = weekOfYear % 3;
 
     const activeVariantId = scheduleWeekCases[activeCaseID].cases.find(
