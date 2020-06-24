@@ -1,3 +1,5 @@
+@import "../../common/variables";
+
 .panel-view {
   margin: 20px auto 0;
   &__button {
@@ -6,22 +8,36 @@
     width: 100px;
     height: 60px;
     border-radius: 5px;
-    border: 1px solid black;
     font-size: 1.7rem;
-    font-weight: bold;
-    background-color: #ffcc00;
+    border: 1px solid transparent;
+    background-color: $label-secondary-bgc;
+    color: #fff;
     text-transform: uppercase;
+    transition: background-color 0.15s ease-in-out;
 
+    &:hover {
+      background-color: darken($color: $label-secondary-bgc, $amount: 5%);
+    }
     &:disabled {
       background-color: gray;
-      color: white;
+      color: #fff;
       opacity: 0.5;
+    }
+
+    &--danger {
+      background-color: $label-danger-bgc;
+      &:hover {
+        background-color: darken($color: $label-danger-bgc, $amount: 5%);
+      }
     }
 
     &-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
     }
   }
 }
