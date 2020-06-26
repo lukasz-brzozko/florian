@@ -11,4 +11,11 @@ body {
 a {
   color: #007bff;
   text-decoration: none;
+  outline: 0;
+
+  &:focus,
+  &:visited,
+  &:active {
+    outline: 0;
+  }
 }
