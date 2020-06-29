@@ -25,8 +25,9 @@ Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
 Aplikacja umożliwia, po uzyskaniu zgody użytkowanika, wysyłanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
 
-| Google Chrome Desktop |    [![Presentation](readme-assets/notification.png)]()     |
+| Przeglądarka          |                    Wygląd powiadomienia                    |
 | --------------------- | :--------------------------------------------------------: |
+| Google Chrome Desktop |    [![Presentation](readme-assets/notification.png)]()     |
 | Google Chrome Mobile  | [![Presentation](readme-assets/notification-mobile.png)]() |
 
 ## Meta
