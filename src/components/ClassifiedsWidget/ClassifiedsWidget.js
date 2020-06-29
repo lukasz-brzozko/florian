@@ -3,12 +3,25 @@ import "./_ClassifiedsWidget.scss";
 import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
 import { getDatabase } from "../../common/firebase";
 import Spinner from "../../common/Spinner/Spinner";
+import AccordionContext from "../../common/contexts";
 
 class ClassifiedsWidget extends React.Component {
-  state = {
-    classifiedsReady: false,
-    classifieds: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.togglePost = (postID) => {
+      this.setState((prevState) => ({
+        activePost: prevState.activePost === postID ? null : postID,
+      }));
+    };
+
+    this.state = {
+      activePost: null,
+      togglePost: this.togglePost,
+      classifiedsReady: false,
+      classifieds: null,
+    };
+  }
 
   getClassifieds = async (postsCount = 4) => {
     const posts = [];
@@ -35,11 +48,15 @@ class ClassifiedsWidget extends React.Component {
   };
 
   generateClassifiedsList = (posts) => (
-    <ul className="classifieds__list">
-      {posts.map((el, index) => (
-        <ClassifiedItem key={index}>{el}</ClassifiedItem>
-      ))}
-    </ul>
+    <AccordionContext.Provider value={this.state}>
+      <ul className="classifieds__list">
+        {posts.map((el, index) => (
+          <ClassifiedItem key={index} id={index}>
+            {el}
+          </ClassifiedItem>
+        ))}
+      </ul>
+    </AccordionContext.Provider>
   );
   componentDidMount() {
     this.getClassifieds();

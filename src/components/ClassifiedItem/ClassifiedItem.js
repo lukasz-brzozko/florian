@@ -3,6 +3,7 @@ import DiffMatchPatch from "diff-match-patch";
 import "./_ClassifiedItem.scss";
 import "../../common/Label/Label";
 import Label from "../../common/Label/Label";
+import AccordionContext from "../../common/contexts";
 
 const ClassifiedItem = (props) => {
   const {
@@ -14,7 +15,6 @@ const ClassifiedItem = (props) => {
     updatedTitle,
   } = props.children;
 
-  const [clicked, setClick] = useState(false);
   const [isNewArtLblVis, setNewArtLblVis] = useState(false);
   const [localEditDate, setLocalEditDate] = useState(null);
 
@@ -64,67 +64,73 @@ const ClassifiedItem = (props) => {
   }, [content, updatedContent]);
 
   return (
-    <li className="classifieds__item">
-      <article className="article">
-        <div
-          className={`article__title-wrapper${
-            clicked ? " article__title-wrapper--active" : ""
-          }`}
-          onClick={(e) => {
-            setClick(!clicked);
-          }}
-        >
-          <h1 className="article__title">{updatedTitle || title}</h1>
-          <div className="article__icons-container">
-            {isNewArtLblVis && (
-              <Label
-                type="new"
-                title="Nowe ogłoszenie"
-                mobileText="N"
-                desktopText="Nowe"
-              />
-            )}
-            {updateDate && (
-              <Label
-                type="update"
-                title="Ogłoszenie edytowane"
-                mobileText="E"
-                desktopText="Edytowane"
-              />
-            )}
-            <span
-              className={`article__show${
-                clicked ? " article__show--active" : ""
+    <AccordionContext.Consumer>
+      {({ activePost, togglePost }) => (
+        <li className="classifieds__item">
+          <article className="article">
+            <div
+              className={`article__title-wrapper${
+                activePost === props.id ? " article__title-wrapper--active" : ""
               }`}
-            ></span>
-          </div>
-        </div>
-        <div
-          className={`article__content-container${
-            clicked ? " article__content-container--active" : ""
-          }`}
-        >
-          <p
-            className={`article__published${
-              clicked ? " article__published--show" : ""
-            }`}
-          >
-            Dodano: {localDate}
-            {localEditDate && (
-              <span className="article__updated">
-                Edytowano: {localEditDate}
-              </span>
-            )}
-          </p>
-          <div
-            className={`article__content${
-              clicked ? " article__content--show" : ""
-            }`}
-            dangerouslySetInnerHTML={{ __html: articleContent.current }}
-          ></div>
-        </div>
-      </article>
-    </li>
+              onClick={(e) => {
+                togglePost(props.id);
+              }}
+            >
+              <h1 className="article__title">{updatedTitle || title}</h1>
+              <div className="article__icons-container">
+                {isNewArtLblVis && (
+                  <Label
+                    type="new"
+                    title="Nowe ogłoszenie"
+                    mobileText="N"
+                    desktopText="Nowe"
+                  />
+                )}
+                {updateDate && (
+                  <Label
+                    type="update"
+                    title="Ogłoszenie edytowane"
+                    mobileText="E"
+                    desktopText="Edytowane"
+                  />
+                )}
+                <span
+                  className={`article__show${
+                    activePost === props.id ? " article__show--active" : ""
+                  }`}
+                ></span>
+              </div>
+            </div>
+            <div
+              className={`article__content-container${
+                activePost === props.id
+                  ? " article__content-container--active"
+                  : ""
+              }`}
+            >
+              <p
+                className={`article__published${
+                  activePost === props.id ? " article__published--show" : ""
+                }`}
+              >
+                Dodano: {localDate}
+                {localEditDate && (
+                  <span className="article__updated">
+                    Edytowano: {localEditDate}
+                  </span>
+                )}
+              </p>
+              <div
+                className={`article__content${
+                  activePost === props.id ? " article__content--show" : ""
+                }`}
+                dangerouslySetInnerHTML={{ __html: articleContent.current }}
+              ></div>
+            </div>
+          </article>
+        </li>
+      )}
+    </AccordionContext.Consumer>
   );
 };
 
