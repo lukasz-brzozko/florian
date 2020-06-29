@@ -1,4 +1,4 @@
-[![Grafik parafialny](./public/logo256.png)](https://florian-8cd60.web.app/)
+[![Grafik parafialny](./readme-assets/logo.svg)](https://florian-8cd60.web.app/)
 
 # Florian - grafik
 
