@@ -2,15 +2,15 @@
 
 # Florian - grafik
 
-> Instalowalna aplikacja webowa, z panelem admnistracyjnym, przedstawiająca grafik niedzielnych Mszy św.
+> Progresywna aplikacja webowa, z panelem administracyjnym, przedstawiająca grafik niedzielnych Mszy św.
 
-> [![Presentation](readme-assets/presentation.gif)]()
+[![Presentation](readme-assets/presentation.gif)]()
 
 ## Instalacja
 
 ## Ogłoszenia
 
-Aplikacja wyśwetla najnowsze ogłoszenia parafialne, które pobierane są z API oficjalnej strony parafii.
+Aplikacja wyświetla najnowsze ogłoszenia parafialne, które pobierane są z API oficjalnej strony parafii.
 
 > Etykiety ogłoszeń
 
@@ -23,7 +23,7 @@ Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
 ## Powiadomienia
 
-Aplikacja umożliwia, po uzyskaniu zgody użytkowanika, wysyłanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
+Aplikacja umożliwia, po uzyskaniu zgody użytkownika, wysyłanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
 
 | Przeglądarka          |                    Wygląd powiadomienia                    |
 | --------------------- | :--------------------------------------------------------: |
