@@ -16,14 +16,14 @@ Aplikacja wyświetla najnowsze ogłoszenia parafialne, które pobierane są z AP
 
 Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
-| Nazwa etykiety | Wygląd etykiety                                     | Warunek występowania etykiety                                                                                |
-| -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Nowe           | [![New label](./readme-assets/label-new.png)]()     | Występuje przez pierwsze 48 godzin od czasu opublikowania ogłoszenia                                         |
-| Edytowane      | [![New label](./readme-assets/label-updated.png)]() | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora |
+| Nazwa etykiety |                     Wygląd etykiety                     | Warunek występowania etykiety                                                                                 |
+| -------------- | :-----------------------------------------------------: | ------------------------------------------------------------------------------------------------------------- |
+| **Nowe**       |     [![New label](./readme-assets/label-new.png)]()     | Występuje przez pierwsze 48 godzin od czasu opublikowania ogłoszenia.                                         |
+| **Edytowane**  | [![Updated label](./readme-assets/label-updated.png)]() | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora. |
 
 ## Powiadomienia
 
-Aplikacja umożliwia, po uzyskaniu zgody użytkownika, wysyłanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
+Aplikacja umożliwia, po uzyskaniu zgody użytkownika, otrzymywanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
 
 | Przeglądarka          |                    Wygląd powiadomienia                    |
 | --------------------- | :--------------------------------------------------------: |
