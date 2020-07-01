@@ -27,16 +27,14 @@ Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
 | Nazwa etykiety |                      Etykieta                       | Warunek występowania etykiety                                                                                 |
 | -------------- | :-------------------------------------------------: | ------------------------------------------------------------------------------------------------------------- |
-| **Nowe**       |  [![New label](./readme-assets/label-new.png)](#)   | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
+| **Nowe**       |     ![New label](./readme-assets/label-new.png)     | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
 | **Edytowane**  | ![Updated label](./readme-assets/label-updated.png) | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora. |
 
 ### Edytowane ogłoszenie
 
 Opublikawane wcześniej ogłoszenie może z czasem zostać zaktualizowane. Z tego powodu, aplikacja, oprócz wysłania powiadomienia i oznaczenia takiego ogłoszenia odpowiednią etykietą, umożliwia podgląd zmian treści wiadomości. W tym celu wykorzystano narzędzie [Diff Match and Patch](https://github.com/google/diff-match-patch).
 
-<del style="background-color: #FFE6E6;">Ten tekst został usunięty po aktualizacji</del>
-
-<ins style="background-color: #D2EFD7;">Ten tekst został dodany po aktualizacji</ins>
+![Diff text](./readme-assets/diff-text.png)
 
 ## Powiadomienia
 
