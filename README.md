@@ -51,7 +51,7 @@ Aplikacja umożliwia, po uzyskaniu zgody użytkownika, otrzymywanie powiadomień
 
 ## Panel administratora
 
-Z różnych przyczyn, parafialny grafik ulega czasami przesunięciu. Z tego powodu istnieje konieczność przesunięcia grafiku także w aplikacji. Panel administracyjny pozwala uprawnionym osobom na wykonanie takeigo działania.
+Z różnych przyczyn, parafialny grafik ulega czasami przesunięciu. Z tego powodu istnieje konieczność przesunięcia grafiku także w aplikacji. Panel administracyjny pozwala uprawnionym osobom na wykonanie takiego działania.
 
 | ![Admin panel](./readme-assets/admin.png) | ![Admin panel Guest](./readme-assets/admin-guest.png) |
 | :---------------------------------------: | :---------------------------------------------------: |
@@ -70,7 +70,3 @@ Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime
 Rozpowszechnianie na licencji MIT. Aby uzyskać więcej informacji, sprawdź licencję.
 
 [https://github.com/lukasz-brzozko](https://github.com/lukasz-brzozko)
-
-```
-
-```
