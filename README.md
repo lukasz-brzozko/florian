@@ -11,7 +11,7 @@
 ## Instalacja
 
 Progresywna aplikacja webowa (PWA) pozwala na przeprowadzenie instalacji z poziomu przeglądarki (zalecany Google Chrome).
-| | |
+|Instrukcja |Załącznik |
 | ------------------------------------------------------ | :----------------------------------------: |
 | 1. Odwiedź stronę https://florian-8cd60.web.app/ | |
 | 2. Na pasku adresu wciśnij przycisk z symbolem "plusa" | ![Presentation](readme-assets/install.png) |
@@ -27,7 +27,7 @@ Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
 | Nazwa etykiety |                      Etykieta                       | Warunek występowania etykiety                                                                                 |
 | -------------- | :-------------------------------------------------: | ------------------------------------------------------------------------------------------------------------- |
-| **Nowe**       |     ![New label](./readme-assets/label-new.png)     | Występuje przez pierwsze 48 godzin od czasu opublikowania ogłoszenia.                                         |
+| **Nowe**       | [![New label](./readme-assets/label-new.png)]('#')  | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
 | **Edytowane**  | ![Updated label](./readme-assets/label-updated.png) | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora. |
 
 ### Edytowane ogłoszenie
@@ -36,7 +36,7 @@ Opublikawane wcześniej ogłoszenie może z czasem zostać zaktualizowane. Z teg
 
 <del style="background-color: #FFE6E6;">Ten tekst został usunięty po aktualizacji</del>
 
-<del style="background-color: #D2EFD7;">Ten tekst został dodany po aktualizacji</del>
+<ins style="background-color: #D2EFD7;">Ten tekst został dodany po aktualizacji</ins>
 
 ## Powiadomienia
 
