@@ -21,6 +21,10 @@ Progresywna aplikacja webowa (PWA) pozwala na przeprowadzenie instalacji z pozio
 
 Aplikacja wyświetla najnowsze ogłoszenia parafialne, które pobierane są z API oficjalnej strony parafii.
 
+| :exclamation: WAŻNE                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------- |
+| Darmowy plan **Firebase Spark** w ramach **Firebase Cloud Functions** ogranicza zapytania klienta tylko do serwisów Google |
+
 ### Etykiety ogłoszeń
 
 Ogłoszenia mogą posiadać następujące rodzaje etykiet:
@@ -66,3 +70,7 @@ Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime
 Rozpowszechnianie na licencji MIT. Aby uzyskać więcej informacji, sprawdź licencję.
 
 [https://github.com/lukasz-brzozko](https://github.com/lukasz-brzozko)
+
+```
+
+```
