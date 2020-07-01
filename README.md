@@ -21,9 +21,9 @@ Progresywna aplikacja webowa (PWA) pozwala na przeprowadzenie instalacji z pozio
 
 Aplikacja wyświetla najnowsze ogłoszenia parafialne, które pobierane są z API oficjalnej strony parafii.
 
-| :exclamation: WAŻNE                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------- |
-| Darmowy plan **Firebase Spark** w ramach **Firebase Cloud Functions** ogranicza zapytania klienta tylko do serwisów Google |
+| :exclamation: WAŻNE :exclamation:                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Darmowy plan [Firebase Spark](https://firebase.google.com/pricing) w ramach [Firebase Cloud Functions](https://firebase.google.com/products/functions) ogranicza zapytania klienta tylko do serwisów Google. Z tego powodu, wykorzystano dodatkowym niezależny serwer przy użyciu Arkuszy Google oraz Google Apps Script |
 
 ### Etykiety ogłoszeń
 
