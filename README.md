@@ -27,7 +27,7 @@ Ogłoszenia mogą posiadać następujące rodzaje etykiet:
 
 | Nazwa etykiety |                      Etykieta                       | Warunek występowania etykiety                                                                                 |
 | -------------- | :-------------------------------------------------: | ------------------------------------------------------------------------------------------------------------- |
-| **Nowe**       | [![New label](./readme-assets/label-new.png)]('#')  | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
+| **Nowe**       |  [![New label](./readme-assets/label-new.png)](#)   | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
 | **Edytowane**  | ![Updated label](./readme-assets/label-updated.png) | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora. |
 
 ### Edytowane ogłoszenie
