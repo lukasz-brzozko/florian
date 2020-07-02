@@ -63,7 +63,7 @@ Z różnych przyczyn, parafialny grafik ulega czasami przesunięciu. Z tego powo
 
 Logowanie do panelu odbywa się z wykorzystaniem [FirebaseUI](https://github.com/firebase/firebaseui-web).
 
-Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime Database Rules](https://firebase.google.com/docs/database/security)
+Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime Database Rules](https://firebase.google.com/docs/database/security).
 
 ## Meta
 
