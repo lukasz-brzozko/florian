@@ -1,72 +1,74 @@
-[![Grafik parafialny](./readme-assets/logo.svg)](https://florian-8cd60.web.app/)
+[Polish](README_pl.md) :point_left:
 
-# Florian - grafik
+[![Church](./readme-assets/logo.svg)](https://florian-8cd60.web.app/)
 
-> Progresywna aplikacja webowa, z panelem administracyjnym, przedstawiająca grafik niedzielnych Mszy św.
+# Florian - the schedule
+
+> A progressive web application with an administrative panel showing the schedule of Sunday Mass.
 
  </br>
 
 ![Presentation](readme-assets/presentation.gif)
 
-## Instalacja
+## Installation
 
-Progresywna aplikacja webowa (PWA) pozwala na przeprowadzenie instalacji z poziomu przeglądarki (zalecany Google Chrome).
-|Instrukcja |Załącznik |
+The progressive web application (PWA) allows installations from a browser (Google Chrome recommended).
+|Instruction |Attachment |
 | ------------------------------------------------------ | :----------------------------------------: |
-| 1. Odwiedź stronę https://florian-8cd60.web.app/ | |
-| 2. Na pasku adresu wciśnij przycisk z symbolem "plusa" | ![Presentation](readme-assets/install.png) |
-| 3. Wybierz "Zainstaluj" |
+| 1. Visit https://florian-8cd60.web.app/ | |
+| 2. In the address bar, press the "plus" symbol | ![Presentation](readme-assets/install.png) |
+| 3. Select "Install"|
 
-## Ogłoszenia
+## Classifieds
 
-Aplikacja wyświetla najnowsze ogłoszenia parafialne, które pobierane są z API oficjalnej strony parafii.
+The application displays the latest parish classifieds that are downloaded from the API of the official parish website.
 
-| :exclamation: WAŻNE :exclamation:                                                                                                                                                                                                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Darmowy plan [Firebase Spark](https://firebase.google.com/pricing#cloud-functions) w ramach [Firebase Cloud Functions](https://firebase.google.com/products/functions) ogranicza zapytania klienta tylko do serwisów Google. Z tego powodu, stworzono dodatkowy, niezależny serwer z wykorzystaniem Arkuszy Google oraz Google Apps Script. |
+| :exclamation: IMPORTANT :exclamation:                                                                                                                                                                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The free [Firebase Spark](https://firebase.google.com/pricing#cloud-functions) plan as part of [Firebase Cloud Functions](https://firebase.google.com/products/functions) limits customer queries only to Google services. For this reason, an additional, independent server was created using Google Sheets and Google Apps Script. |
 
-### Etykiety ogłoszeń
+### Classifieds labels
 
-Ogłoszenia mogą posiadać następujące rodzaje etykiet:
+Advertisements may have the following types of labels:
 
-| Nazwa etykiety |                      Etykieta                       | Warunek występowania etykiety                                                                                 |
-| -------------- | :-------------------------------------------------: | ------------------------------------------------------------------------------------------------------------- |
-| **Nowe**       |     ![New label](./readme-assets/label-new.png)     | Występuje przez 48 godzin od czasu opublikowania ogłoszenia.                                                  |
-| **Edytowane**  | ![Updated label](./readme-assets/label-updated.png) | Występuje gdy ogłoszenie, opublikowane na oficjalnej stronie parafii, zostało edytowane przez administratora. |
+| Label name  |                        Label                        | Condition for the label to be present                                                                        |
+| ----------- | :-------------------------------------------------: | ------------------------------------------------------------------------------------------------------------ |
+| **New**     |     ![New label](./readme-assets/label-new.png)     | Occurs for 48 hours from publishing the announcement.                                                        |
+| **Updated** | ![Updated label](./readme-assets/label-updated.png) | Occurs when the publication, published on the official parish website, has been edited by the administrator. |
 
-### Edytowane ogłoszenie
+### Updated publication
 
-Opublikawane wcześniej ogłoszenie może z czasem zostać zaktualizowane. Z tego powodu, aplikacja, oprócz wysłania powiadomienia i oznaczenia takiego ogłoszenia odpowiednią etykietą, umożliwia podgląd zmian treści wiadomości. W tym celu wykorzystano narzędzie [Diff Match and Patch](https://github.com/google/diff-match-patch).
+A previously published announcement may be updated over time. For this reason, the application, in addition to sending a notification and marking such a publication with an appropriate label, allows you to preview changes in the content of the message. For this purpose, the [Diff Match and Patch](https://github.com/google/diff-match-patch) tool was used.
 
-![Diff text](./readme-assets/diff-text.png)
+![Diff text](./readme-assets/diff-text-en.png)
 
-## Powiadomienia
+## Notifications
 
-Aplikacja umożliwia, po uzyskaniu zgody użytkownika, otrzymywanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
+The application allows, after obtaining the user's permission, to receive notifications informing about the fact of adding a new parish announcement.
 
-| Przeglądarka          |                     Powiadomienie                      |
-| --------------------- | :----------------------------------------------------: |
-| Google Chrome Desktop |    ![Presentation](readme-assets/notification.png)     |
-| Google Chrome Mobile  | ![Presentation](readme-assets/notification-mobile.png) |
+| Browser               |                       Notification                        |
+| --------------------- | :-------------------------------------------------------: |
+| Google Chrome Desktop |    ![Presentation](readme-assets/notification-en.png)     |
+| Google Chrome Mobile  | ![Presentation](readme-assets/notification-mobile-en.png) |
 
-## Panel administratora
+## Administrator panel
 
-Z różnych przyczyn, parafialny grafik ulega czasami przesunięciu. Z tego powodu istnieje konieczność przesunięcia grafiku także w aplikacji. Panel administracyjny pozwala uprawnionym osobom na wykonanie takiego działania.
+For various reasons, the parish schedule sometimes shifts. For this reason, it is also necessary to move the schedule in the application. The administration panel allows authorized persons to perform such action.
 
 | ![Admin panel](./readme-assets/admin.png) | ![Admin panel Guest](./readme-assets/admin-guest.png) |
 | :---------------------------------------: | :---------------------------------------------------: |
-|   _Widok panelu jako osoba uprawniona_    |               _Widok panelu jako gość_                |
+|     _Panel view as authorized person_     |                _Panel view as a guest_                |
 
 </br>
 
-Logowanie do panelu odbywa się z wykorzystaniem [FirebaseUI](https://github.com/firebase/firebaseui-web).
+Logging in to the panel is done using [FirebaseUI](https://github.com/firebase/firebaseui-web).
 
-Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime Database Rules](https://firebase.google.com/docs/database/security)
+[Firebase Realtime Database Rules](https://firebase.google.com/docs/database/security) are responsible for verifying user's permission to make changes.
 
 ## Meta
 
 Łukasz Brzózko – lukasz@brzozko.pl
 
-Rozpowszechnianie na licencji MIT. Aby uzyskać więcej informacji, sprawdź licencję.
+Distributed under the MIT license. See `LICENSE` for more information.
 
 [https://github.com/lukasz-brzozko](https://github.com/lukasz-brzozko)
