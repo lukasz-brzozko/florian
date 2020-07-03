@@ -69,6 +69,6 @@ Za weryfikację uprawnień do wprowadzania zmian odpowiadają [Firebase Realtime
 
 Łukasz Brzózko – lukasz@brzozko.pl
 
-Rozpowszechnianie na licencji MIT. Aby uzyskać więcej informacji, sprawdź licencję.
+Rozpowszechnianie na licencji MIT. Aby uzyskać więcej informacji, sprawdź warunki licencji.
 
 [https://github.com/lukasz-brzozko](https://github.com/lukasz-brzozko)
