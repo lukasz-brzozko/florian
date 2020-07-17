@@ -29,6 +29,18 @@ const ClassifiedItem = (props) => {
     return daysDiffer;
   };
 
+  const scrollToElement = (el) => {
+    const mq = window.matchMedia("(min-width: 1200px)").matches;
+
+    if (!mq) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "center",
+      });
+    }
+  };
+
   useEffect(() => {
     if (updateDate) {
       const editDate = new Date(updateDate);
@@ -73,7 +85,11 @@ const ClassifiedItem = (props) => {
                 activePost === props.id ? " article__title-wrapper--active" : ""
               }`}
               onClick={(e) => {
+                const parentOfTarget = e.currentTarget.parentElement;
+
                 togglePost(props.id);
+                activePost !== props.id &&
+                  setTimeout(() => scrollToElement(parentOfTarget), 800);
               }}
             >
               <h1 className="article__title">{updatedTitle || title}</h1>
