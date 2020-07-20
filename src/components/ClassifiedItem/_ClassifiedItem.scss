@@ -144,7 +144,7 @@
       max-height: 0;
       margin: 0 auto;
       overflow: hidden;
-      transition: max-height 0.8s, margin-bottom 0.7s, background-color 0.2s;
+      transition: max-height 0.8s, padding-bottom 0.7s, background-color 0.2s;
 
       &--active {
         max-height: 5000px;
