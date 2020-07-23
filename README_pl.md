@@ -8,7 +8,7 @@
 
  </br>
 
-![Prezentacja](readme-assets/presentation.gif)
+![Prezentacja aplikacji](readme-assets/presentation.gif)
 
 ## Instalacja
 
@@ -16,7 +16,7 @@ Progresywna aplikacja webowa (PWA) pozwala na przeprowadzenie instalacji z pozio
 |Instrukcja |Załącznik |
 | ------------------------------------------------------ | :----------------------------------------: |
 | 1. Odwiedź stronę https://florian-8cd60.web.app/ | |
-| 2. Na pasku adresu wciśnij przycisk z symbolem "plusa" | ![Presentation](readme-assets/install.png) |
+| 2. Na pasku adresu wciśnij przycisk z symbolem "plusa" | ![Pasek instalacji](readme-assets/install.png) |
 | 3. Wybierz "Zainstaluj" |
 
 ## Ogłoszenia
@@ -46,18 +46,18 @@ Opublikowane wcześniej ogłoszenie może z czasem zostać zaktualizowane. Z teg
 
 Aplikacja umożliwia, po uzyskaniu zgody użytkownika, otrzymywanie powiadomień, informujących o fakcie dodania nowego ogłoszenia parafialnego.
 
-| Przeglądarka          |                     Powiadomienie                      |
-| --------------------- | :----------------------------------------------------: |
-| Google Chrome Desktop |    ![Presentation](readme-assets/notification.png)     |
-| Google Chrome Mobile  | ![Presentation](readme-assets/notification-mobile.png) |
+| Przeglądarka          |                           Powiadomienie                           |
+| --------------------- | :---------------------------------------------------------------: |
+| Google Chrome Desktop | ![Powiadomienie w wersji desktop](readme-assets/notification.png) |
+| Google Chrome Mobile  |  ![Powiadomienie mobilne](readme-assets/notification-mobile.png)  |
 
 ## Panel administratora
 
 Z różnych przyczyn, parafialny grafik ulega czasami przesunięciu. Z tego powodu istnieje konieczność przesunięcia grafiku także w aplikacji. Panel administracyjny pozwala uprawnionym osobom na wykonanie takiego działania.
 
-| ![Admin panel](./readme-assets/admin.png) | ![Admin panel Guest](./readme-assets/admin-guest.png) |
-| :---------------------------------------: | :---------------------------------------------------: |
-|   _Widok panelu jako osoba uprawniona_    |               _Widok panelu jako gość_                |
+| ![Widok panelu jako osoba uprawniona](./readme-assets/admin.png) | ![Widok panelu jako gość](./readme-assets/admin-guest.png) |
+| :--------------------------------------------------------------: | :--------------------------------------------------------: |
+|               _Widok panelu jako osoba uprawniona_               |                  _Widok panelu jako gość_                  |
 
 </br>
 

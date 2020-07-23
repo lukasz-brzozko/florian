@@ -16,7 +16,7 @@ The progressive web application (PWA) allows installations from a browser (Googl
 |Instruction |Attachment |
 | ------------------------------------------------------ | :----------------------------------------: |
 | 1. Visit https://florian-8cd60.web.app/ | |
-| 2. In the address bar, press the "plus" symbol | ![Presentation](readme-assets/install.png) |
+| 2. In the address bar, press the "plus" symbol | ![Installation bar](readme-assets/install.png) |
 | 3. Select "Install"|
 
 ## Classifieds
@@ -46,10 +46,10 @@ A previously published announcement may be updated over time. For this reason, t
 
 The application allows, after obtaining the user's permission, to receive notifications informing about the fact of adding a new parish announcement.
 
-| Browser               |                       Notification                        |
-| --------------------- | :-------------------------------------------------------: |
-| Google Chrome Desktop |    ![Presentation](readme-assets/notification-en.png)     |
-| Google Chrome Mobile  | ![Presentation](readme-assets/notification-mobile-en.png) |
+| Browser               |                           Notification                           |
+| --------------------- | :--------------------------------------------------------------: |
+| Google Chrome Desktop |    ![Desktop notification](readme-assets/notification-en.png)    |
+| Google Chrome Mobile  | ![Mobile notification](readme-assets/notification-mobile-en.png) |
 
 ## Administrator panel
 
