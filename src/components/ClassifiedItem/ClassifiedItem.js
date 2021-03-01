@@ -19,7 +19,22 @@ const ClassifiedItem = (props) => {
   const [localEditDate, setLocalEditDate] = useState(null);
 
   const pubDate = new Date(date);
-  const localDate = pubDate.toLocaleString();
+
+  const pubDay = pubDate.getDate();
+  const pubMonth = pubDate.getMonth() + 1;
+  const pubYear = pubDate.getFullYear();
+  const pubHours = pubDate.getHours();
+  const pubMinutes = pubDate.getMinutes();
+  const pubSeconds = pubDate.getSeconds();
+
+  const pad = (n) => {
+    return n < 10 ? "0" + n : n;
+  };
+
+  const localDate = `${pad(pubDay)}.${pad(pubMonth)}.${pad(pubYear)}, ${pad(
+    pubHours
+  )}:${pad(pubMinutes)}:${pad(pubSeconds)}`;
+
   const articleContent = useRef(content);
 
   const getDifferTimeFromNow = (eventTime) => {
