@@ -2,7 +2,7 @@ import React from "react";
 import "./_LoginView.scss";
 import * as firebase from "firebase/app";
 import { getAuth, getDatabase } from "../../common/firebase";
-import firebaseui from "firebaseui/dist/npm__pl";
+import firebaseui from "firebaseui/dist/npm";
 class LoginView extends React.Component {
   state = {
     loading: true,
