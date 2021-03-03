@@ -1,5 +1,6 @@
 import React from "react";
-import "./_ScheduleWidget.scss";
+import SwiperCore, { Virtual } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Spinner from "../../common/Spinner/Spinner";
 import ContentCell from "../ContentCell/ContentCell";
 import SchedulePointer from "../SchedulePointer/SchedulePointer";
@@ -8,15 +9,19 @@ import { ReactComponent as Arrow } from "../../assets/arrow.svg";
 import { ReactComponent as HomeBtn } from "../../assets/home.svg";
 import moment from "moment";
 
+import 'swiper/swiper.scss';
+import "./_ScheduleWidget.scss";
+
+SwiperCore.use([Virtual]);
 class ScheduleWidget extends React.Component {
   constructor() {
     super();
     this.weekdayOffset = 7;
     this.weeksOfCurrentYear = moment().isoWeeksInYear();
-    this.date = null;
   }
   state = {
     data: null,
+    date: null,
     isDataReady: false,
     isDataFetchingError: false,
     scheduleLoaderVisible: true,
@@ -147,9 +152,10 @@ class ScheduleWidget extends React.Component {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    this.date = `${day < 10 ? "0" + day : day}.${
-      month < 10 ? "0" + month : month
-    }.${year} r.`;
+    this.setState({
+      date: `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month
+        }.${year} r.`
+    })
   };
   changeWeekOfYear = (direction = 1) => {
     if (direction === 1) {
@@ -182,7 +188,7 @@ class ScheduleWidget extends React.Component {
     this.removeDatabaseListener();
   }
   render() {
-    const { isDataReady, data, weekOfYear } = this.state;
+    const { isDataReady, data, date, weekOfYear } = this.state;
     const {
       generateMassSchedule,
       generateTimetable,
@@ -197,23 +203,39 @@ class ScheduleWidget extends React.Component {
     return (
       <>
         <section className="schedule">
-          <div
-            className={`schedule__container${
-              isDataReady ? " schedule__container--active" : ""
-            }`}
+          <Swiper
+            speed={200}
+            touchRatio={0.25}
+            spaceBetween={100}
+            slidesPerView={1}
+            onTouchEnd={({ swipeDirection, touches }) => {
+              const startX = Math.abs(touches.startX);
+              const currentX = Math.abs(touches.currentX);
+              const distance = Math.abs(startX - currentX);
+              if (this.state.isDataReady && (distance > 50)) {
+                swipeDirection === "next" ? changeWeekOfYear(1) : changeWeekOfYear(-1)
+              }
+            }}
           >
-            <span className="schedule__date">{isDataReady && this.date}</span>
-            {isDataReady && generateMassSchedule(data)}
-            {massesArray}
-            {massesArray && this.weekdayOffset === 7 && <SchedulePointer />}
-            {!isDataReady && <Spinner dimensions={80} />}
-          </div>
+            <SwiperSlide>
+              <div
+                className={`schedule__container${isDataReady ? " schedule__container--active" : ""
+                  }`}
+              >
+
+                <span className="schedule__date">{isDataReady && date}</span>
+                {isDataReady && generateMassSchedule(data)}
+                {massesArray}
+                {massesArray && this.weekdayOffset === 7 && <SchedulePointer />}
+                {!isDataReady && <Spinner dimensions={80} />}
+              </div>
+            </SwiperSlide>
+          </Swiper>
           {isDataReady && (
             <div className="schedule__button-container">
               <Arrow
-                className={`schedule__button schedule__button--previous${
-                  weekOfYear === 1 ? " schedule__button--hidden" : ""
-                }`}
+                className={`schedule__button schedule__button--previous${weekOfYear === 1 ? " schedule__button--hidden" : ""
+                  }`}
                 onClick={(e) => {
                   changeWeekOfYear(-1);
                 }}
@@ -226,11 +248,10 @@ class ScheduleWidget extends React.Component {
                 }}
               />
               <Arrow
-                className={`schedule__button schedule__button--next${
-                  weekOfYear === weeksOfCurrentYear
-                    ? " schedule__button--hidden"
-                    : ""
-                }`}
+                className={`schedule__button schedule__button--next${weekOfYear === weeksOfCurrentYear
+                  ? " schedule__button--hidden"
+                  : ""
+                  }`}
                 onClick={(e) => {
                   changeWeekOfYear(1);
                 }}

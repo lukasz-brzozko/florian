@@ -5,6 +5,7 @@
   max-width: 500px;
   min-height: 320px;
   margin: 0 auto;
+  cursor: grab;
 
   &__date {
     display: flex;
@@ -87,4 +88,8 @@
       visibility: hidden;
     }
   }
+}
+
+.swiper-container {
+  overflow: visible !important;
 }
