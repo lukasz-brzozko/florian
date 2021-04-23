@@ -1,8 +1,10 @@
 import React from "react";
-import "./_LoginView.scss";
 import * as firebase from "firebase/app";
-import { getAuth, getDatabase } from "../../common/firebase";
-import firebaseui from "firebaseui/dist/npm";
+import { getAuth } from "../../common/firebase";
+import firebaseui from 'firebaseui-pl';
+import "firebaseui-pl/firebaseui.css"
+import "./_LoginView.scss";
+
 class LoginView extends React.Component {
   state = {
     loading: true,
@@ -15,7 +17,7 @@ class LoginView extends React.Component {
     }
     const uiConfig = {
       callbacks: {
-        signInSuccessWithAuthResult: (authResult, redirectUrl = "/panel") => {},
+        signInSuccessWithAuthResult: (authResult, redirectUrl = "/panel") => { },
         uiShown: () => {
           this.setState({ loading: false });
         },
