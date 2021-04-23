@@ -14,15 +14,18 @@
     "node-fetch": "^2.6.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-firebaseui-localized": "^1.1.0",
     "react-loader-spinner": "^3.1.14",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^4.0.3",
     "swiper": "^6.4.15",
     "xml-js": "^1.6.11"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run build-sw",
+    "build-sw": "node ./src/sw-build.js",
+    "sw": "workbox generateSW",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "scss": "node-sass src/index.scss -o public/style/"
@@ -45,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/helper-compilation-targets": "^7.13.8",
-    "node-sass": "^4.14.1"
+    "node-sass": "^4.14.1",
+    "workbox-build": "^6.1.5"
   }
 }
