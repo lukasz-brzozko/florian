@@ -1,11 +1,14 @@
 @import "../../common/_variables";
 
 .schedule {
-  width: 90%;
   max-width: 500px;
   min-height: 320px;
   margin: 0 auto;
   cursor: grab;
+
+  @media (min-width: 500px) {
+      width: 90%;
+  }
 
   &__date {
     display: flex;
@@ -23,6 +26,7 @@
     font-weight: bold;
   }
   &__container {
+    box-sizing: border-box;
     display: grid;
     position: relative;
     grid-template-rows: 35px repeat($grid-masses-count, $grid-row-min-height);
@@ -30,7 +34,7 @@
     grid-auto-flow: column;
     justify-items: center;
     align-items: center;
-    box-shadow: $box-shadow;
+    border: 2px solid black;
     border-radius: $border-radius;
     background-color: #fff;
     overflow: hidden;
@@ -90,6 +94,13 @@
   }
 }
 
+.swiper-slide  {
+  width: 90% !important;
+  padding: 0 5%;
+}
+
 .swiper-container {
-  overflow: visible !important;
+  @media (min-width: 500px) {
+    overflow: visible !important;
+  }
 }

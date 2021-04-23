@@ -5,9 +5,13 @@ html {
   font-size: $font-size-base;
   font-family: $font-family-base;
 }
+
 body {
   background-color: $body-bgc;
+  width: 100%;
+  overflow-x: hidden;
 }
+
 a {
   color: #007bff;
   text-decoration: none;
