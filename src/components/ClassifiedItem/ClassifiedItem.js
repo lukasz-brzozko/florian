@@ -59,7 +59,18 @@ const ClassifiedItem = (props) => {
   useEffect(() => {
     if (updateDate) {
       const editDate = new Date(updateDate);
-      setLocalEditDate(editDate.toLocaleString());
+      const editDay = editDate.getDate();
+      const editMonth = editDate.getMonth() + 1;
+      const editYear = editDate.getFullYear();
+      const editHours = editDate.getHours();
+      const editMinutes = editDate.getMinutes();
+      const editSeconds = editDate.getSeconds();
+
+      const editLocalDate = `${pad(editDay)}.${pad(editMonth)}.${pad(editYear)}, ${pad(
+        editHours
+      )}:${pad(editMinutes)}:${pad(editSeconds)}`;
+
+      setLocalEditDate(editLocalDate);
     }
   }, [updateDate]);
 
@@ -80,7 +91,7 @@ const ClassifiedItem = (props) => {
         if (el[0] === -1) {
           newContent += `<del>${el[1]}</del>`;
         } else if (el[0] === 1) {
-          newContent += `<ins">${el[1]}</ins>`;
+          newContent += `<ins>${el[1]}</ins>`;
         } else {
           newContent += el[1];
         }
