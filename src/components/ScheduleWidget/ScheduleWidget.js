@@ -188,7 +188,7 @@ class ScheduleWidget extends React.Component {
       const scheduleDate = schedule.getElementsByClassName('schedule__date');
       const scheduleContent = schedule.getElementsByClassName('schedule__content');
       const [arrowLeft, home, arrowRight] = buttonsContainer.getElementsByClassName('schedule__button')
-      const tl = gsap.timeline({ defaults: { duration: 0.35, ease: 'power1.inOut' } })
+      const tl = gsap.timeline({ defaults: { clearProps: 'transform', duration: 0.35, ease: 'power1.inOut' } })
 
       tl.fromTo([scheduleDate, scheduleContent], { autoAlpha: 0 }, { autoAlpha: 1 })
       tl.fromTo(arrowLeft, { autoAlpha: 0, x: 5 }, { autoAlpha: 1, x: 0 })
