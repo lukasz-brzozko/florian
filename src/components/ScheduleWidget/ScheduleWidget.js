@@ -1,4 +1,5 @@
 import React from "react";
+import gsap from 'gsap';
 import SwiperCore, { Virtual } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Spinner from "../../common/Spinner/Spinner";
@@ -14,6 +15,9 @@ import "./_ScheduleWidget.scss";
 
 SwiperCore.use([Virtual]);
 class ScheduleWidget extends React.Component {
+  refButtons = React.createRef();
+  refSchedule = React.createRef();
+
   constructor() {
     super();
     this.weekdayOffset = 7;
@@ -176,6 +180,23 @@ class ScheduleWidget extends React.Component {
     this.setDateFromTheWeekOfYear();
   };
 
+
+  animateSchedule = () => {
+    const schedule = this.refSchedule?.current;
+    const buttonsContainer = this.refButtons?.current;
+    if (schedule !== undefined && buttonsContainer !== undefined) {
+      const scheduleDate = schedule.getElementsByClassName('schedule__date');
+      const scheduleContent = schedule.getElementsByClassName('schedule__content');
+      const [arrowLeft, home, arrowRight] = buttonsContainer.getElementsByClassName('schedule__button')
+      const tl = gsap.timeline({ defaults: { duration: 0.35, ease: 'power1.inOut' } })
+
+      tl.fromTo([scheduleDate, scheduleContent], { autoAlpha: 0 }, { autoAlpha: 1 })
+      tl.fromTo(arrowLeft, { autoAlpha: 0, x: 5 }, { autoAlpha: 1, x: 0 })
+      tl.fromTo(arrowRight, { autoAlpha: 0, x: -5 }, { autoAlpha: 1, x: 0 }, '<')
+      tl.fromTo(home, { autoAlpha: 0, y: 5 }, { autoAlpha: 1, y: 0 }, '<')
+    }
+  }
+
   removeDatabaseListener = async () => {
     const db = await getDatabase();
     db.ref("data").off("value");
@@ -184,9 +205,18 @@ class ScheduleWidget extends React.Component {
     this.setDateFromTheWeekOfYear();
     this.checkScheduleStatus();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if ((prevState.isDataReady !== this.state.isDataReady)
+      && this.state.data !== null) {
+      this.animateSchedule();
+    }
+  }
+
   componentWillUnmount() {
     this.removeDatabaseListener();
   }
+
   render() {
     const { isDataReady, data, date, weekOfYear } = this.state;
     const {
@@ -221,6 +251,7 @@ class ScheduleWidget extends React.Component {
               <div
                 className={`schedule__container${isDataReady ? " schedule__container--active" : ""
                   }`}
+                ref={this.refSchedule}
               >
 
                 <span className="schedule__date">{isDataReady && date}</span>
@@ -232,7 +263,7 @@ class ScheduleWidget extends React.Component {
             </SwiperSlide>
           </Swiper>
           {isDataReady && (
-            <div className="schedule__button-container">
+            <div className="schedule__button-container" ref={this.refButtons}>
               <Arrow
                 className={`schedule__button schedule__button--previous${weekOfYear === 1 ? " schedule__button--hidden" : ""
                   }`}

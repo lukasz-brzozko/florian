@@ -2,7 +2,7 @@
 
 .schedule {
   max-width: 500px;
-  min-height: 320px;
+  height: 329px;
   margin: 0 auto;
   cursor: grab;
 
@@ -20,7 +20,6 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    border-bottom: 1px solid black;
     background-color: lighten($body-bgc, 1%);
     font-size: 1.9rem;
     font-weight: bold;
@@ -34,20 +33,17 @@
     grid-auto-flow: column;
     justify-items: center;
     align-items: center;
+    height: 239px;
     border: 2px solid black;
     border-radius: $border-radius;
     background-color: #fff;
     overflow: hidden;
 
-    &--active {
-      grid-gap: $grid-gap;
-      background-color: #000;
-    }
   }
   &__button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 2vh;
+    margin-top: 15px;
   }
   &__button {
     width: 12%;
