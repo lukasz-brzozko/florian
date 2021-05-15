@@ -34,7 +34,7 @@ class ClassifiedsWidget extends React.Component {
       gsap.fromTo(
         classifieds,
         { autoAlpha: 0, x: -10 },
-        { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut', stagger: 0.1, x: 0 })
+        { autoAlpha: 1, delay: 0.15, duration: 0.5, ease: 'power1.inOut', stagger: 0.1, x: 0 })
     }
   }
 
