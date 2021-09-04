@@ -1,16 +1,17 @@
+import { gsap } from "gsap";
+import moment from "moment";
 import React from "react";
-import gsap from 'gsap';
-import SwiperCore, { Virtual } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Virtual } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { ReactComponent as Arrow } from "../../assets/arrow.svg";
+import { ReactComponent as HomeBtn } from "../../assets/home.svg";
+import { getDatabase } from "../../common/firebase";
 import Spinner from "../../common/Spinner/Spinner";
 import ContentCell from "../ContentCell/ContentCell";
 import SchedulePointer from "../SchedulePointer/SchedulePointer";
-import { getDatabase } from "../../common/firebase";
-import { ReactComponent as Arrow } from "../../assets/arrow.svg";
-import { ReactComponent as HomeBtn } from "../../assets/home.svg";
-import moment from "moment";
 
-import 'swiper/swiper.scss';
+import "swiper/swiper.scss";
 import "./_ScheduleWidget.scss";
 
 SwiperCore.use([Virtual]);
@@ -157,9 +158,10 @@ class ScheduleWidget extends React.Component {
     const year = date.getFullYear();
 
     this.setState({
-      date: `${day < 10 ? "0" + day : day}.${month < 10 ? "0" + month : month
-        }.${year} r.`
-    })
+      date: `${day < 10 ? "0" + day : day}.${
+        month < 10 ? "0" + month : month
+      }.${year} r.`,
+    });
   };
   changeWeekOfYear = (direction = 1) => {
     if (direction === 1) {
@@ -180,22 +182,38 @@ class ScheduleWidget extends React.Component {
     this.setDateFromTheWeekOfYear();
   };
 
-
   animateSchedule = () => {
     const schedule = this.refSchedule?.current;
     const buttonsContainer = this.refButtons?.current;
     if (schedule !== undefined && buttonsContainer !== undefined) {
-      const scheduleDate = schedule.getElementsByClassName('schedule__date');
-      const scheduleContent = schedule.getElementsByClassName('schedule__content');
-      const [arrowLeft, home, arrowRight] = buttonsContainer.getElementsByClassName('schedule__button')
-      const tl = gsap.timeline({ defaults: { clearProps: 'transform', duration: 0.35, ease: 'power1.inOut' } })
+      const scheduleDate = schedule.getElementsByClassName("schedule__date");
+      const scheduleContent =
+        schedule.getElementsByClassName("schedule__content");
+      const [arrowLeft, home, arrowRight] =
+        buttonsContainer.getElementsByClassName("schedule__button");
+      const tl = gsap.timeline({
+        defaults: {
+          clearProps: "transform",
+          duration: 0.35,
+          ease: "power1.inOut",
+        },
+      });
 
-      tl.fromTo([scheduleDate, scheduleContent], { autoAlpha: 0 }, { autoAlpha: 1 })
-      tl.fromTo(arrowLeft, { autoAlpha: 0, x: 5 }, { autoAlpha: 1, x: 0 })
-      tl.fromTo(arrowRight, { autoAlpha: 0, x: -5 }, { autoAlpha: 1, x: 0 }, '<')
-      tl.fromTo(home, { autoAlpha: 0, y: 5 }, { autoAlpha: 1, y: 0 }, '<')
+      tl.fromTo(
+        [scheduleDate, scheduleContent],
+        { autoAlpha: 0 },
+        { autoAlpha: 1 }
+      );
+      tl.fromTo(arrowLeft, { autoAlpha: 0, x: 5 }, { autoAlpha: 1, x: 0 });
+      tl.fromTo(
+        arrowRight,
+        { autoAlpha: 0, x: -5 },
+        { autoAlpha: 1, x: 0 },
+        "<"
+      );
+      tl.fromTo(home, { autoAlpha: 0, y: 5 }, { autoAlpha: 1, y: 0 }, "<");
     }
-  }
+  };
 
   removeDatabaseListener = async () => {
     const db = await getDatabase();
@@ -207,8 +225,10 @@ class ScheduleWidget extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if ((prevState.isDataReady !== this.state.isDataReady)
-      && this.state.data !== null) {
+    if (
+      prevState.isDataReady !== this.state.isDataReady &&
+      this.state.data !== null
+    ) {
       this.animateSchedule();
     }
   }
@@ -242,18 +262,20 @@ class ScheduleWidget extends React.Component {
               const startX = Math.abs(touches.startX);
               const currentX = Math.abs(touches.currentX);
               const distance = Math.abs(startX - currentX);
-              if (this.state.isDataReady && (distance > 50)) {
-                swipeDirection === "next" ? changeWeekOfYear(1) : changeWeekOfYear(-1)
+              if (this.state.isDataReady && distance > 50) {
+                swipeDirection === "next"
+                  ? changeWeekOfYear(1)
+                  : changeWeekOfYear(-1);
               }
             }}
           >
             <SwiperSlide>
               <div
-                className={`schedule__container${isDataReady ? " schedule__container--active" : ""
-                  }`}
+                className={`schedule__container${
+                  isDataReady ? " schedule__container--active" : ""
+                }`}
                 ref={this.refSchedule}
               >
-
                 <span className="schedule__date">{isDataReady && date}</span>
                 {isDataReady && generateMassSchedule(data)}
                 {massesArray}
@@ -265,8 +287,9 @@ class ScheduleWidget extends React.Component {
           {isDataReady && (
             <div className="schedule__button-container" ref={this.refButtons}>
               <Arrow
-                className={`schedule__button schedule__button--previous${weekOfYear === 1 ? " schedule__button--hidden" : ""
-                  }`}
+                className={`schedule__button schedule__button--previous${
+                  weekOfYear === 1 ? " schedule__button--hidden" : ""
+                }`}
                 onClick={(e) => {
                   changeWeekOfYear(-1);
                 }}
@@ -279,10 +302,11 @@ class ScheduleWidget extends React.Component {
                 }}
               />
               <Arrow
-                className={`schedule__button schedule__button--next${weekOfYear === weeksOfCurrentYear
-                  ? " schedule__button--hidden"
-                  : ""
-                  }`}
+                className={`schedule__button schedule__button--next${
+                  weekOfYear === weeksOfCurrentYear
+                    ? " schedule__button--hidden"
+                    : ""
+                }`}
                 onClick={(e) => {
                   changeWeekOfYear(1);
                 }}

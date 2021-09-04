@@ -1,22 +1,21 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
 import DiffMatchPatch from "diff-match-patch";
-import "./_ClassifiedItem.scss";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+
+import AccordionContext from "../../common/contexts";
 import "../../common/Label/Label";
 import Label from "../../common/Label/Label";
-import AccordionContext from "../../common/contexts";
+
+import "./_ClassifiedItem.scss";
 
 const ClassifiedItem = (props) => {
-  const {
-    title,
-    content,
-    date,
-    updateDate,
-    updatedContent,
-    updatedTitle,
-  } = props.children;
+  const { title, content, date, updateDate, updatedContent, updatedTitle } =
+    props.children;
 
   const [isNewArtLblVis, setNewArtLblVis] = useState(false);
   const [localEditDate, setLocalEditDate] = useState(null);
+
+  const refPublished = useRef(null);
+  const refArticleContent = useRef(null);
 
   const pubDate = new Date(date);
 
@@ -66,9 +65,9 @@ const ClassifiedItem = (props) => {
       const editMinutes = editDate.getMinutes();
       const editSeconds = editDate.getSeconds();
 
-      const editLocalDate = `${pad(editDay)}.${pad(editMonth)}.${pad(editYear)}, ${pad(
-        editHours
-      )}:${pad(editMinutes)}:${pad(editSeconds)}`;
+      const editLocalDate = `${pad(editDay)}.${pad(editMonth)}.${pad(
+        editYear
+      )}, ${pad(editHours)}:${pad(editMinutes)}:${pad(editSeconds)}`;
 
       setLocalEditDate(editLocalDate);
     }
@@ -100,7 +99,6 @@ const ClassifiedItem = (props) => {
       articleContent.current = newContent;
     }
   }, [content, updatedContent]);
-
   return (
     <AccordionContext.Consumer>
       {({ activePost, togglePost }) => (
@@ -114,8 +112,8 @@ const ClassifiedItem = (props) => {
                 const parentOfTarget = e.currentTarget.parentElement;
 
                 togglePost(props.id);
-                activePost !== props.id &&
-                  setTimeout(() => scrollToElement(parentOfTarget), 830);
+                // activePost !== props.id &&
+                // setTimeout(() => scrollToElement(parentOfTarget), 830);
               }}
             >
               <h1 className="article__title">{updatedTitle || title}</h1>
@@ -149,11 +147,22 @@ const ClassifiedItem = (props) => {
                   ? " article__content-container--active"
                   : ""
               }`}
+              style={{
+                height:
+                  activePost === props.id
+                    ? `${
+                        refPublished.current?.clientHeight +
+                        refArticleContent.current?.clientHeight +
+                        30
+                      }px`
+                    : "0px",
+              }}
             >
               <p
                 className={`article__published${
                   activePost === props.id ? " article__published--show" : ""
                 }`}
+                ref={refPublished}
               >
                 Dodano: {localDate}
                 {localEditDate && (
@@ -166,6 +175,7 @@ const ClassifiedItem = (props) => {
                 className={`article__content${
                   activePost === props.id ? " article__content--show" : ""
                 }`}
+                ref={refArticleContent}
                 dangerouslySetInnerHTML={{ __html: articleContent.current }}
               ></div>
             </div>

@@ -1,13 +1,14 @@
+import { gsap } from "gsap";
 import React from "react";
-import gsap from 'gsap';
-import "./_ClassifiedsWidget.scss";
-import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
+
+import AccordionContext from "../../common/contexts";
 import { getDatabase } from "../../common/firebase";
 import Spinner from "../../common/Spinner/Spinner";
-import AccordionContext from "../../common/contexts";
+import ClassifiedItem from "../ClassifiedItem/ClassifiedItem";
+
+import "./_ClassifiedsWidget.scss";
 
 class ClassifiedsWidget extends React.Component {
-
   classifiedsList = React.createRef();
 
   constructor(props) {
@@ -29,15 +30,23 @@ class ClassifiedsWidget extends React.Component {
 
   animateClassifieds = () => {
     const classifiedsList = this.classifiedsList?.current;
-    const classifieds = classifiedsList?.getElementsByClassName('classifieds__item')
+    const classifieds =
+      classifiedsList?.getElementsByClassName("classifieds__item");
     if (classifieds !== undefined) {
       gsap.fromTo(
         classifieds,
         { autoAlpha: 0, x: -10 },
-        { autoAlpha: 1, delay: 0.15, duration: 0.5, ease: 'power1.inOut', stagger: 0.1, x: 0 })
+        {
+          autoAlpha: 1,
+          delay: 0.15,
+          duration: 0.5,
+          ease: "power1.inOut",
+          stagger: 0.1,
+          x: 0,
+        }
+      );
     }
-  }
-
+  };
 
   getClassifieds = async (postsCount = 4) => {
     const posts = [];
@@ -65,7 +74,7 @@ class ClassifiedsWidget extends React.Component {
 
   generateClassifiedsList = (posts) => (
     <AccordionContext.Provider value={this.state}>
-      <ul className="classifieds__list" >
+      <ul className="classifieds__list">
         {posts.map((el, index) => (
           <ClassifiedItem key={index} id={index}>
             {el}
@@ -79,13 +88,13 @@ class ClassifiedsWidget extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-
-    if ((prevState.classifiedsReady !== this.state.classifiedsReady)
-      && this.state.classifiedsReady) {
-      this.animateClassifieds()
+    if (
+      prevState.classifiedsReady !== this.state.classifiedsReady &&
+      this.state.classifiedsReady
+    ) {
+      this.animateClassifieds();
     }
   }
-
 
   render() {
     const { classifieds, classifiedsReady } = this.state;
