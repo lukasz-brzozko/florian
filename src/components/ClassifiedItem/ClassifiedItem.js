@@ -112,8 +112,8 @@ const ClassifiedItem = (props) => {
                 const parentOfTarget = e.currentTarget.parentElement;
 
                 togglePost(props.id);
-                // activePost !== props.id &&
-                // setTimeout(() => scrollToElement(parentOfTarget), 830);
+                activePost !== props.id &&
+                  setTimeout(() => scrollToElement(parentOfTarget), 530);
               }}
             >
               <h1 className="article__title">{updatedTitle || title}</h1>
